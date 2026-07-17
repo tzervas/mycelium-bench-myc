@@ -1,0 +1,192 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+  "emitted_items": [
+    "co-include:run_once,Backend,Outcome",
+    "co-include:Case",
+    "ScalingSample",
+    "ScalingOutcome"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 30,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use std :: time :: Instant ;",
+      "reason": "`use std.time::Instant` — `std.time` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 32,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_core :: Node ;",
+      "reason": "`use mycelium_core::Node` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 33,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_std_runtime :: scheduler :: Scheduler ;",
+      "reason": "`use mycelium_std_runtime.scheduler::Scheduler` — `mycelium_std_runtime.scheduler` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 35,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: backend :: { run_once , Backend , Engines , Outcome } ;",
+      "reason": "`use backend::Engines` — `Engines` is not among sibling `backend`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:run_once,Backend,Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 38,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" One batch-timing measurement: `batch_size` independent jobs run across `workers` OS threads.\"] # [derive (Debug , Clone , Copy , serde :: Serialize)] pub struct ScalingSample { # [doc = \" How many OS worker threads the [`Scheduler`] used for this sample.\"] pub workers : usize , # [doc = \" Wall-clock nanoseconds for the whole batch (all `batch_size` jobs), the fastest of `repeats`\"] # [doc = \" timed batches (the same min-of-batches, least-noise convention as [`crate::timing::bench`]).\"] pub batch_ns : f64 , # [doc = \" Per-job nanoseconds (`batch_ns / batch_size`) — comparable across worker counts.\"] pub ns_per_job : f64 , }",
+      "reason": "struct `ScalingSample` named field(s) `workers, batch_ns, ns_per_job` emitted positionally as `ScalingSample(Binary{64}, Float, Float)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped (matches `lib/std/*.myc` hand-ports)",
+      "item_name": "ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 38,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" One batch-timing measurement: `batch_size` independent jobs run across `workers` OS threads.\"] # [derive (Debug , Clone , Copy , serde :: Serialize)] pub struct ScalingSample { # [doc = \" How many OS worker threads the [`Scheduler`] used for this sample.\"] pub workers : usize , # [doc = \" Wall-clock nanoseconds for the whole batch (all `batch_size` jobs), the fastest of `repeats`\"] # [doc = \" timed batches (the same min-of-batches, least-noise convention as [`crate::timing::bench`]).\"] pub batch_ns : f64 , # [doc = \" Per-job nanoseconds (`batch_ns / batch_size`) — comparable across worker counts.\"] pub ns_per_job : f64 , }",
+      "reason": "struct `ScalingSample` derive(Debug): field 1 has type `Float`, a primitive repr (or `Seq`/tuple/other bracketed shape) with no ambient `Show` instance in this file (`lib/std/fmt.myc`'s primitive impls live in a separate, unimported nodule) — the whole derive is left an honest gap rather than a partial/fabricated render (G2)",
+      "item_name": "ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 38,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One batch-timing measurement: `batch_size` independent jobs run across `workers` OS threads.\"] # [derive (Debug , Clone , Copy , serde :: Serialize)] pub struct ScalingSample { # [doc = \" How many OS worker threads the [`Scheduler`] used for this sample.\"] pub workers : usize , # [doc = \" Wall-clock nanoseconds for the whole batch (all `batch_size` jobs), the fastest of `repeats`\"] # [doc = \" timed batches (the same min-of-batches, least-noise convention as [`crate::timing::bench`]).\"] pub batch_ns : f64 , # [doc = \" Per-job nanoseconds (`batch_ns / batch_size`) — comparable across worker counts.\"] pub ns_per_job : f64 , }",
+      "reason": "struct `ScalingSample` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 38,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One batch-timing measurement: `batch_size` independent jobs run across `workers` OS threads.\"] # [derive (Debug , Clone , Copy , serde :: Serialize)] pub struct ScalingSample { # [doc = \" How many OS worker threads the [`Scheduler`] used for this sample.\"] pub workers : usize , # [doc = \" Wall-clock nanoseconds for the whole batch (all `batch_size` jobs), the fastest of `repeats`\"] # [doc = \" timed batches (the same min-of-batches, least-noise convention as [`crate::timing::bench`]).\"] pub batch_ns : f64 , # [doc = \" Per-job nanoseconds (`batch_ns / batch_size`) — comparable across worker counts.\"] pub ns_per_job : f64 , }",
+      "reason": "struct `ScalingSample` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 38,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" One batch-timing measurement: `batch_size` independent jobs run across `workers` OS threads.\"] # [derive (Debug , Clone , Copy , serde :: Serialize)] pub struct ScalingSample { # [doc = \" How many OS worker threads the [`Scheduler`] used for this sample.\"] pub workers : usize , # [doc = \" Wall-clock nanoseconds for the whole batch (all `batch_size` jobs), the fastest of `repeats`\"] # [doc = \" timed batches (the same min-of-batches, least-noise convention as [`crate::timing::bench`]).\"] pub batch_ns : f64 , # [doc = \" Per-job nanoseconds (`batch_ns / batch_size`) — comparable across worker counts.\"] pub ns_per_job : f64 , }",
+      "reason": "struct `ScalingSample` derive(...) names serde :: Serialize not in the DN-128 standard-derive set this leaf builds (Debug/Default/Clone/Copy/PartialEq/PartialOrd/Hash all recognized; bare Eq/Ord are deliberately NOT recognized — see emit/derives/mod.rs::TABLE's doc for why) — dropped, no confirmed Mycelium surface",
+      "item_name": "ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 50,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" Why a case could not be scaling-measured on a backend — never-silent (G2): a scaling curve that\"] # [doc = \" could not be built still says *why*, it does not just omit the backend.\"] # [derive (Debug , Clone , serde :: Serialize)] pub enum ScalingOutcome { # [doc = \" Measured: one [`ScalingSample`] per worker count in `1..=workers`.\"] Measured (Vec < ScalingSample >) , # [doc = \" The backend was skipped for this case (toolchain absent / feature off) — the single-job probe\"] # [doc = \" outcome's reason, carried over verbatim.\"] Skipped (String) , # [doc = \" The backend cannot lower this case at all (capability loss) — no batch was attempted.\"] Unmeasurable (String) , }",
+      "reason": "enum `ScalingOutcome` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "ScalingOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 50,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" Why a case could not be scaling-measured on a backend — never-silent (G2): a scaling curve that\"] # [doc = \" could not be built still says *why*, it does not just omit the backend.\"] # [derive (Debug , Clone , serde :: Serialize)] pub enum ScalingOutcome { # [doc = \" Measured: one [`ScalingSample`] per worker count in `1..=workers`.\"] Measured (Vec < ScalingSample >) , # [doc = \" The backend was skipped for this case (toolchain absent / feature off) — the single-job probe\"] # [doc = \" outcome's reason, carried over verbatim.\"] Skipped (String) , # [doc = \" The backend cannot lower this case at all (capability loss) — no batch was attempted.\"] Unmeasurable (String) , }",
+      "reason": "enum `ScalingOutcome` derive(...) names serde :: Serialize not in the DN-128 enum-derive set this leaf builds (Debug/PartialEq/Clone/Copy recognized; bare Eq is a satisfied co-occurrence note; Hash/PartialOrd/Ord/Default stay product-only for now) — dropped, no confirmed Mycelium surface",
+      "item_name": "ScalingOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 63,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" One case's full scaling curve on one backend.\"] # [derive (Debug , Clone , serde :: Serialize)] pub struct ScalingPoint { # [doc = \" The case id.\"] pub case_id : String , # [doc = \" The backend measured.\"] pub backend : Backend , # [doc = \" How many independent jobs made up each timed batch (the trial-count denominator).\"] pub batch_size : u32 , # [doc = \" How many timed batches were run per worker count (the fastest is reported — see\"] # [doc = \" [`ScalingSample::batch_ns`]); this is the trial-count numerator, so the full trial count for\"] # [doc = \" one [`ScalingSample`] is `batch_size * repeats`.\"] pub repeats : u32 , # [doc = \" The measurement (or the honest reason none was taken).\"] pub outcome : ScalingOutcome , }",
+      "reason": "struct `ScalingPoint` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "ScalingPoint"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 80,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl ScalingPoint { # [doc = \" Speedup at each measured worker count vs the 1-worker sample (`t_1 / t_n`), paired with the\"] # [doc = \" worker count and the **ideal-linear** reference (`== workers`) for comparison. `None` when\"] # [doc = \" this point has no measured samples (skip/unmeasurable/empty).\"] # [must_use] pub fn speedups (& self) -> Option < Vec < (usize , f64 , f64) > > { let ScalingOutcome :: Measured (samples) = & self . outcome else { return None ; } ; let base = samples . iter () . find (| s | s . workers == 1) ? . ns_per_job ; if base <= 0.0 { return None ; } Some (samples . iter () . map (| s | { let speedup = if s . ns_per_job > 0.0 { base / s . ns_per_job } else { 0.0 } ; # [allow (clippy :: cast_precision_loss)] let ideal = s . workers as f64 ; (s . workers , speedup , ideal) }) . collect () ,) } # [doc = \" A coarse **Amdahl serial-fraction** estimate from the 1-worker and highest-worker-count\"] # [doc = \" samples: solving `speedup = 1 / (s + (1-s)/n)` for `s` at the max measured `n`. `Empirical`\"] # [doc = \" (fit from these two measured points, not a proof) — `None` when there are fewer than two\"] # [doc = \" distinct worker-count samples or the fit is degenerate (speedup <= 0 or >= n, both of which\"] # [doc = \" would imply a nonsensical negative/undefined serial fraction).\"] # [must_use] pub fn amdahl_serial_fraction (& self) -> Option < f64 > { let sp = self . speedups () ? ; let (_ , s1 , _) = * sp . iter () . find (| (w , _ , _) | * w == 1) ? ; let (n , sn , _) = * sp . iter () . max_by_key (| (w , _ , _) | * w) ? ; if n <= 1 || s1 <= 0.0 || sn <= 0.0 { return None ; } # [allow (clippy :: cast_precision_loss)] let n = n as f64 ; let raw = (n / sn - 1.0) / (n - 1.0) ; Some (raw . clamp (0.0 , 1.0)) } }",
+      "reason": "no member of this impl block could be transpiled (2 sub-issue(s)): impl method `speedups` body: `let` binding uses an unsupported pattern (only simple `let x = e;` is supported); impl method `amdahl_serial_fraction` body: unsupported expression form `self . speedups () ?`",
+      "item_name": "ScalingPoint"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 133,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" The full scaling run: every measured (case, backend) point, plus the host + trial-shape metadata\"] # [doc = \" needed to interpret the numbers honestly.\"] # [derive (Debug , Clone , serde :: Serialize)] pub struct ScalingRun { # [doc = \" A short, best-effort host note (arch/os/hw-thread-count) — provenance only, matches the\"] # [doc = \" single-core report's `host_note` convention.\"] pub host_note : String , # [doc = \" The worker counts exercised, `1..=max_workers` (ascending; always includes `1` as the\"] # [doc = \" sequential reference the speedup is computed against).\"] pub worker_counts : Vec < usize > , # [doc = \" Every measured point (case × backend).\"] pub points : Vec < ScalingPoint > , }",
+      "reason": "struct `ScalingRun` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "ScalingRun"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 147,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Build a fresh [`Node`] + [`Engines`] and run `backend` on `case` once — the unit of work fanned\"] # [doc = \" out across the [`Scheduler`]'s worker pool. Each job is fully self-contained (its own clone / own\"] # [doc = \" engines / own compile, for the compiled backends), so jobs share **no** mutable state (RT1) and\"] # [doc = \" the closure is `Send` without borrowing anything cross-thread.\"] fn independent_job (case_src : & 'static str , backend : Backend) -> impl FnOnce () -> Outcome + Send { move | | { let nodule = mycelium_l1 :: parse (case_src) . expect (\"scaling job: corpus case re-parses\") ; let env = mycelium_l1 :: check_nodule (& nodule) . expect (\"scaling job: corpus case re-checks\") ; let node : Node = mycelium_l1 :: elaborate (& env , \"main\") . expect (\"scaling job: corpus case re-elaborates\") ; let eng = Engines :: default () ; run_once (backend , & node , & eng) } }",
+      "reason": "unsupported Rust type form `impl FnOnce () -> Outcome + Send`",
+      "item_name": "independent_job"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 167,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Time one batch of `batch_size` independent jobs across exactly `workers` OS threads, taking the\"] # [doc = \" fastest of `repeats` timed batches (min-of-batches, the same least-noise convention as\"] # [doc = \" [`crate::timing::bench`]). Returns `None` if every job in the batch failed to produce a value\"] # [doc = \" (nothing meaningful to time — the caller falls back to the outcome-only probe).\"] fn time_batch (case_src : & 'static str , backend : Backend , workers : usize , batch_size : u32 , repeats : u32 ,) -> Option < ScalingSample > { let scheduler = Scheduler :: with_workers (workers , (workers * 2) . max (1)) . ok () ? ; let mut best = f64 :: INFINITY ; let mut any_value = false ; for _ in 0 .. repeats . max (1) { let jobs : Vec < _ > = (0 .. batch_size . max (1)) . map (| _ | independent_job (case_src , backend)) . collect () ; let t = Instant :: now () ; let outcomes = scheduler . run_indexed (jobs , None , None) ; let elapsed = t . elapsed () ; if outcomes . iter () . any (| o | matches ! (o , Outcome :: Value (_))) { any_value = true ; } # [allow (clippy :: cast_precision_loss)] let batch_ns = elapsed . as_nanos () as f64 ; best = best . min (batch_ns) ; } if ! any_value { return None ; } # [allow (clippy :: cast_precision_loss)] let ns_per_job = best / f64 :: from (batch_size . max (1)) ; Some (ScalingSample { workers , batch_ns : best , ns_per_job , }) }",
+      "reason": "unsupported expression form `Scheduler :: with_workers (workers , (workers * 2) . max (1)) . ok () ?`",
+      "item_name": "time_batch"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 210,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Measure one case's scaling curve on one backend, across `1..=max_workers` OS threads.\"] # [doc = \"\"] # [doc = \" A single probe run first decides *whether* this (case, backend) pair is even measurable\"] # [doc = \" (matches the single-core harness's own probe-before-time discipline in\"] # [doc = \" [`crate::backend::warm_runner`]): a `Skipped`/`Unlowerable`/`Error` probe short-circuits to the\"] # [doc = \" corresponding never-silent [`ScalingOutcome`] variant with no batch timing attempted.\"] # [must_use] pub fn measure_case_scaling (case : & Case , backend : Backend , max_workers : usize , batch_size : u32 , repeats : u32 ,) -> ScalingPoint { let max_workers = max_workers . max (1) ; let node = case . elaborate () . unwrap_or_else (| e | panic ! (\"corpus case `{}` failed to elaborate: {e}\" , case . id)) ; let eng = Engines :: default () ; let probe = run_once (backend , & node , & eng) ; let outcome = match & probe { Outcome :: Skipped (reason) => ScalingOutcome :: Skipped (reason . clone ()) , Outcome :: Unlowerable (reason) => ScalingOutcome :: Unmeasurable (reason . clone ()) , Outcome :: Error (reason) => ScalingOutcome :: Unmeasurable (format ! (\"runtime error on the single-job probe (not a capability boundary, but no batch was \\\n             attempted): {reason}\")) , Outcome :: Value (_) => { let samples : Vec < ScalingSample > = (1 ..= max_workers) . filter_map (| w | time_batch (case . src , backend , w , batch_size , repeats)) . collect () ; if samples . is_empty () { ScalingOutcome :: Unmeasurable (\"single-job probe produced a value but no scaling batch did (non-deterministic \\\n                     or environment-sensitive outcome) — recorded, not hidden\" . to_string () ,) } else { ScalingOutcome :: Measured (samples) } } } ; ScalingPoint { case_id : case . id . to_string () , backend , batch_size , repeats , outcome , } }",
+      "reason": "method call `.max(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__max` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `max(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "measure_case_scaling"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "line": 265,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Run the scaling suite: every `(case, backend)` pair in `cases` × `Backend::all()` (baseline\"] # [doc = \" interpreter included — it is the natural single-core-vs-multicore comparison point too, unlike\"] # [doc = \" the WIN/LOSS differential where it is excluded as the anchor). `max_workers` is host-derived by\"] # [doc = \" the caller (`Scheduler::new().workers()` is the natural default — see `bin/bench.rs`).\"] # [must_use] pub fn run_scaling (cases : & [Case] , max_workers : usize , batch_size : u32 , repeats : u32 ,) -> ScalingRun { let host_note = crate :: host_note_for_scaling () ; let worker_counts : Vec < usize > = (1 ..= max_workers . max (1)) . collect () ; let mut points = Vec :: new () ; for case in cases { for backend in Backend :: all () { points . push (measure_case_scaling (case , backend , max_workers , batch_size , repeats ,)) ; } } ScalingRun { host_note , worker_counts , points , } }",
+      "reason": "qualified/associated-function call `crate :: host_note_for_scaling` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "run_scaling"
+    }
+  ],
+  "total_top_level_items": 14
+}

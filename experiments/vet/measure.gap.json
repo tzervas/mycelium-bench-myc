@@ -1,0 +1,143 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+  "emitted_items": [
+    "co-include:Backend,Outcome",
+    "co-include:Case,Fragment",
+    "co-include:Timing",
+    "co-include:Verdict",
+    "iters_for"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 13,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_core :: Node ;",
+      "reason": "`use mycelium_core::Node` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 15,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: backend :: { warm_runner , Backend , Engines , Outcome } ;",
+      "reason": "`use backend::warm_runner` — `warm_runner` is not among sibling `backend`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Backend,Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 15,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: backend :: { warm_runner , Backend , Engines , Outcome } ;",
+      "reason": "`use backend::Engines` — `Engines` is not among sibling `backend`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Backend,Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 17,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: timing :: { bench , Timing } ;",
+      "reason": "`use timing::bench` — `bench` is not among sibling `timing`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 18,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: verdict :: { classify , Verdict } ;",
+      "reason": "`use verdict::classify` — `classify` is not among sibling `verdict`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 20,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" Per-backend timing budgets (warmup == timed iters per batch). In-process paths get many iters;\"] # [doc = \" spawn-bound native paths get few (each call is a process spawn). Reified here (no black box).\"] # [must_use] fn iters_for (backend : Backend) -> u32 { match backend { Backend :: Interp => 20_000 , Backend :: AotEnv => 20_000 , Backend :: Jit => 2_000 , Backend :: DirectLlvm | Backend :: MlirDialect => 40 , } }",
+      "reason": "dropped non-doc attribute(s) on fn `iters_for`: # [must_use]",
+      "item_name": "iters_for"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 35,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" One backend's measured result on one case: its outcome, optional timing, and the classified\"] # [doc = \" verdict vs the interpreter.\"] # [derive (Debug , Clone , serde :: Serialize)] pub struct BackendResult { # [doc = \" Which backend.\"] pub backend : Backend , # [doc = \" A short status word (`value` / `skipped` / `unlowerable` / `error`).\"] pub outcome_status : & 'static str , # [doc = \" The non-value reason (empty for a value outcome).\"] pub outcome_reason : String , # [doc = \" The per-run timing, if a value was produced and it was timed (the warm `.run()`/`.call()` /\"] # [doc = \" in-process eval cost — NOT including any one-time compile).\"] pub timing : Option < Timing > , # [doc = \" The one-time setup (compile) nanoseconds for a compiled backend, when a compile happened.\"] # [doc = \" Reported separately so the per-run `timing` stays honest (compile cost is amortized, not\"] # [doc = \" charged to every invocation).\"] pub compile_ns : Option < f64 > , # [doc = \" The verdict vs the trusted interpreter baseline.\"] pub verdict : Verdict , }",
+      "reason": "struct `BackendResult` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "BackendResult"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 56,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" All backends' results on one case.\"] # [derive (Debug , Clone , serde :: Serialize)] pub struct CaseRecord { # [doc = \" The case id.\"] pub id : String , # [doc = \" The case's fragment.\"] pub fragment : Fragment , # [doc = \" The case's one-line note.\"] pub note : String , # [doc = \" The v0-calculus source (for reproducibility / audit).\"] pub src : String , # [doc = \" The interpreter baseline's per-call time (ns), if it produced a value — the comparison anchor.\"] pub baseline_ns : Option < f64 > , # [doc = \" Each non-baseline backend's result (interp is excluded — it *is* the baseline).\"] pub backends : Vec < BackendResult > , }",
+      "reason": "struct `CaseRecord` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "CaseRecord"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 73,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" The full execution-backend run: every case's record, in corpus order.\"] # [derive (Debug , Clone , serde :: Serialize)] pub struct RunRecord { # [doc = \" Per-case records.\"] pub cases : Vec < CaseRecord > , }",
+      "reason": "struct `RunRecord` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "RunRecord"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 80,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Run + time one backend on one already-elaborated node using the compile-once/run-many\"] # [doc = \" [`warm_runner`]: the compiled paths compile their artifact **once** (its cost captured separately\"] # [doc = \" as `compile_ns`), then only the warm `.run()`/`.call()` is timed — so the per-run figure is not\"] # [doc = \" polluted by per-call compilation. A capability loss / skip / error is detected by the probe and is\"] # [doc = \" never timed. Returns `(probe_outcome, per_run_timing?, compile_ns?)`.\"] fn measure_backend (backend : Backend , node : & Node , eng : & Engines ,) -> (Outcome , Option < Timing > , Option < f64 >) { let warm = warm_runner (backend , node , eng) ; let compile_ns = warm . compile_ns ; let timing = warm . run . as_ref () . map (| run | { let iters = iters_for (backend) ; bench (iters , | | { let _ = std :: hint :: black_box (run ()) ; }) }) ; (warm . probe , timing , compile_ns) }",
+      "reason": "field access on a non-`self` base — the transpiler tracks no local types, so the projection cannot be resolved to a constructor position (only `self.<field>` desugars to a `match`)",
+      "item_name": "measure_backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 102,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Measure all backends on one case and classify each vs the interpreter baseline.\"] # [must_use] pub fn measure_case (case : & Case , eng : & Engines) -> CaseRecord { let node = case . elaborate () . unwrap_or_else (| e | panic ! (\"corpus case `{}` failed to elaborate: {e}\" , case . id)) ; let (interp_outcome , interp_timing , _) = measure_backend (Backend :: Interp , & node , eng) ; let baseline_ns = interp_timing . map (| t | t . ns_per_call) ; let mut backends = Vec :: new () ; for backend in Backend :: all () { if backend . is_baseline () { continue ; } let (outcome , timing , compile_ns) = measure_backend (backend , & node , eng) ; let verdict = classify (backend , (& interp_outcome , interp_timing) , (& outcome , timing) ,) ; backends . push (BackendResult { backend , outcome_status : outcome . status () , outcome_reason : outcome . reason () . to_string () , timing , compile_ns , verdict , }) ; } CaseRecord { id : case . id . to_string () , fragment : case . fragment , note : case . note . to_string () , src : case . src . to_string () , baseline_ns , backends , } }",
+      "reason": "method call `.unwrap_or_else(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__unwrap_or_else` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `unwrap_or_else(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "measure_case"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 144,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Run the whole corpus, in order. (The caller supplies the corpus so a focused run is possible.)\"] # [must_use] pub fn run_corpus (cases : & [Case] , eng : & Engines) -> RunRecord { let cases = cases . iter () . map (| c | measure_case (c , eng)) . collect () ; RunRecord { cases } }",
+      "reason": "method call `.collect(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__collect` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `collect(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "run_corpus"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "line": 151,
+      "col": 1,
+      "category": "TestItem",
+      "rust_construct": "TestItem",
+      "snippet": "# [cfg (test)] mod tests { use super :: * ; use crate :: corpus :: corpus ; # [test] fn measuring_a_bit_case_yields_a_baseline_and_per_backend_verdicts () { let eng = Engines :: default () ; let case = corpus () . into_iter () . find (| c | c . id == \"bit-xor-not\") . expect (\"the bit-xor-not case exists\") ; let rec = measure_case (& case , & eng) ; assert_eq ! (rec . id , \"bit-xor-not\") ; assert ! (rec . baseline_ns . is_some () , \"the trusted base must produce a baseline time\") ; assert_eq ! (rec . backends . len () , 4) ; let aot = rec . backends . iter () . find (| b | b . backend == Backend :: AotEnv) . unwrap () ; assert ! (! matches ! (aot . verdict , Verdict :: CorrectnessLoss { .. } | Verdict :: BaselineFailed { .. }) , \"AOT must not diverge from the interpreter on a bit case: {:?}\" , aot . verdict) ; } # [test] fn a_recursion_case_records_capability_loss_for_compiled_paths () { let eng = Engines :: default () ; let case = corpus () . into_iter () . find (| c | c . id == \"rec-self\") . expect (\"the rec-self case exists\") ; let rec = measure_case (& case , & eng) ; for b in & rec . backends { match b . backend { Backend :: AotEnv => assert ! (! matches ! (b . verdict , Verdict :: CapabilityLoss { .. }) , \"AOT env-machine handles recursion\") , Backend :: Jit | Backend :: DirectLlvm => assert ! (matches ! (b . verdict , Verdict :: CapabilityLoss { .. } | Verdict :: Skipped { .. }) , \"compiled path must record a capability loss / skip on recursion: {:?}\" , b . verdict) , Backend :: MlirDialect => { } Backend :: Interp => unreachable ! (\"interp is the baseline, not a row\") , } } } }",
+      "reason": "#[cfg(test)] item — out of scope for this PoC's transpilation surface (excluded from the expressible-fraction denominator, but recorded, never silently skipped)",
+      "item_name": "tests"
+    }
+  ],
+  "total_top_level_items": 13
+}

@@ -1,0 +1,51 @@
+// nodule: bench.report
+// Deterministic **report emission** — markdown (human) + JSON (machine), the dual projection (G11).
+// The report carries: run metadata + caveats, the per-backend/per-case numbers, the explicit
+// WIN/LOSS/REGRESSION table, an explicit **"where we're losing"** section (capability + correctness +
+// speed losses), and the ingested LLM-harness section.
+//
+// **Honesty stamped in:** the harness *plumbing* is `Empirical` (test-verified). Every measured
+// number is `Empirical` (with its trial accounting); a capability loss / skip is `Declared`. There
+// is **no pre-written performance target** (VR-5): the verdicts are whatever was measured. The
+// microbench caveats (warmup, process-spawn cost, debug-vs-release) are stated, not buried.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.report;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.backend) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Backend = Interp | AotEnv | Jit | DirectLlvm | MlirDialect;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.scaling) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type ScalingSample = ScalingSample(Binary{64}, Float, Float);
+type ScalingOutcome = Measured(Vec[ScalingSample]) | Skipped(Bytes) | Unmeasurable(Bytes);
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.verdict) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type BaselineEntry = BaselineEntry(Bytes, Bytes, Float);
+type RegressionBaseline = RegressionBaseline(Bytes, Bytes, Binary{32}, Vec[BaselineEntry]);
+type RegressionOutcome = Improvement(Binary{64}) | Hold(Binary{64}) | Regression(Binary{64}) | NotTimed | NoBaseline | HostMismatch(Bytes, Bytes);
+type Verdict = SpeedWin(Binary{64}) | SpeedNeutral(Binary{64}) | SpeedLoss(Binary{64}, Bytes) | CorrectnessLoss(Bytes) | CapabilityLoss(Bytes) | RuntimeError(Bytes) | Skipped(Bytes) | BaselineFailed(Bytes);
+
+// A roll-up of losses for the "where we're losing" section.
+type LossRollup = LossRollup(Vec[(Bytes, Bytes, Bytes)], Vec[(Bytes, Bytes, Bytes)], Vec[(Bytes, Bytes, Binary{64}, Bytes)]);
+
+impl Init[LossRollup] for LossRollup {
+  fn init() => LossRollup =
+    LossRollup(Nil, Nil, Nil);
+};
+
+// Loss/win tallies across a run.
+type Tallies = Tallies(Binary{32}, Binary{32}, Binary{32}, Binary{32}, Binary{32}, Binary{32}, Binary{32}, Binary{32});
+
+impl Show[Tallies] for Tallies {
+  fn render(x: Tallies) => Bytes =
+    match x { Tallies(p0, p1, p2, p3, p4, p5, p6, p7) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("Tallies(", render(width_cast(p0, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(width_cast(p1, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(width_cast(p2, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(width_cast(p3, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(width_cast(p4, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(width_cast(p5, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(width_cast(p6, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(width_cast(p7, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ")") };
+};
+
+impl Init[Tallies] for Tallies {
+  fn init() => Tallies =
+    Tallies(0b0000_0000_0000_0000_0000_0000_0000_0000, 0b0000_0000_0000_0000_0000_0000_0000_0000, 0b0000_0000_0000_0000_0000_0000_0000_0000, 0b0000_0000_0000_0000_0000_0000_0000_0000, 0b0000_0000_0000_0000_0000_0000_0000_0000, 0b0000_0000_0000_0000_0000_0000_0000_0000, 0b0000_0000_0000_0000_0000_0000_0000_0000, 0b0000_0000_0000_0000_0000_0000_0000_0000);
+};
+
+// The neutral-band constant, re-exported for the binary to stamp into the report metadata.
+pub fn neutral_band() => Float = NEUTRAL_BAND;

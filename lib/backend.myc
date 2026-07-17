@@ -1,0 +1,51 @@
+// nodule: bench.backend
+// The backend abstraction: the five execution paths under measurement, and a uniform [`Outcome`]
+// that distinguishes — never-silently (G2) — a produced value, a *graceful skip* (toolchain
+// absent), a *capability loss* (an unlowerable node, with its reason), and a hard error.
+//
+// The [`Backend::Interp`] reference interpreter is the **trusted base** (NFR-7/ADR-007): the
+// differential measures every other backend *against it*. A divergence from the interpreter is a
+// recorded correctness LOSS; an `Unsupported`/`Unlowerable` outcome is a recorded *capability* LOSS.
+//
+// All backends consume the same closed Core IR [`Node`] and dispatch through the same trusted prim
+// registry + certified swap engine, so "two execution paths" cannot mean "two semantics".
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.backend;
+
+// Declared: ambient Option type co-emit — oracle self-containment (G-α Rank-1 / L2-A). Type shape cites lib/std/option.myc (Some/None sum); combinators are NOT fabricated (VR-5/G2). Checker does not seed Option as prelude (unlike Bool/Unit unconditional, Vec conditional).
+type Option[A] = Some(A) | None;
+
+// One of the execution backends being measured. `Interp` is the trusted base; the rest are compared
+// against it.
+pub type Backend = Interp | AotEnv | Jit | DirectLlvm | MlirDialect;
+
+impl Show[Backend] for Backend {
+  fn render(x: Backend) => Bytes =
+    match x { Interp => "Interp", AotEnv => "AotEnv", Jit => "Jit", DirectLlvm => "DirectLlvm", MlirDialect => "MlirDialect" };
+};
+
+fn eq_Backend(a: Backend, b: Backend) => Binary{1} =
+  match a { Interp => match b { Interp => 0b1, _ => 0b0 }, AotEnv => match b { AotEnv => 0b1, _ => 0b0 }, Jit => match b { Jit => 0b1, _ => 0b0 }, DirectLlvm => match b { DirectLlvm => 0b1, _ => 0b0 }, MlirDialect => match b { MlirDialect => 0b1, _ => 0b0 } };
+
+impl Backend {
+  // A short, stable label for the report (matches the serde rename).
+  fn label(self: Backend) => Bytes = match self { Interp => "interp", AotEnv => "aot-env", Jit => "jit", DirectLlvm => "direct-llvm", MlirDialect => "mlir-dialect" };
+};
+
+// The result of running one backend on one case — uniform across backends, never-silent.
+pub type Outcome = Value(Box[CoreValue]) | Skipped(Bytes) | Unlowerable(Bytes) | Error(Bytes);
+
+impl Outcome {
+  // The produced value, if any.
+  fn value(self: Outcome) => Option[CoreValue] = match self { Value(v) => Some(v), _ => None };
+  // A short status word for the report.
+  fn status(self: Outcome) => Bytes = match self { Value(_) => "value", Skipped(_) => "skipped", Unlowerable(_) => "unlowerable", Error(_) => "error" };
+  // The reason string for a non-value outcome (empty for a value).
+  fn reason(self: Outcome) => Bytes = match self { Value(_) => "", Skipped(m) | Unlowerable(m) | Error(m) => m };
+};
+
+// Dispatch: run one backend on one node once, returning its [`Outcome`]. (Timing is layered on top
+// in `measure`; this is the single-shot call the timing loop repeats.)
+pub fn run_once(backend: Backend, node: Node, eng: Engines) => Outcome = match backend { Interp => run_interp(node, eng), AotEnv => run_aot_env(node, eng), Jit => run_jit(node), DirectLlvm => run_direct_llvm(node), MlirDialect => run_mlir_dialect(node) };

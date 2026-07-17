@@ -1,0 +1,212 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+  "emitted_items": [
+    "co-include:Backend,Outcome",
+    "co-include:Case,Fragment",
+    "co-include:ScalingOutcome,ScalingSample",
+    "co-include:Speed,Verdict"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 44,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod backend ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 45,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod corpus ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "corpus"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 46,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod llm ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "llm"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 47,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod measure ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "measure"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 48,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod report ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "report"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 49,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod scaling ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "scaling"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 50,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod timing ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 51,
+      "col": 1,
+      "category": "ModuleDecl",
+      "rust_construct": "ModuleDecl",
+      "snippet": "pub mod verdict ;",
+      "reason": "external `mod foo;` declaration — file-linkage, not translatable library surface (Mycelium's nodule-per-file model makes the module tree implicit in the file layout; the sibling file transpiles as its own nodule). Excluded from the expressible-fraction denominator, recorded not dropped",
+      "item_name": "verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 53,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use backend :: { Backend , Engines , Outcome } ;",
+      "reason": "`use backend::Engines` — `Engines` is not among sibling `backend`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Backend,Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 54,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use corpus :: { corpus , Case , Fragment } ;",
+      "reason": "`use corpus::corpus` — `corpus` is not among sibling `corpus`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Case,Fragment"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 55,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use llm :: { parse_any_llm_json , GrokLlmReport , LlmReport , ParsedLlmSection } ;",
+      "reason": "`use llm::parse_any_llm_json` — `parse_any_llm_json` is not among sibling `llm`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use llm::GrokLlmReport` — `GrokLlmReport` is not among sibling `llm`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use llm::LlmReport` — `LlmReport` is not among sibling `llm`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use llm::ParsedLlmSection` — `ParsedLlmSection` is not among sibling `llm`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 56,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use measure :: { run_corpus , CaseRecord , RunRecord } ;",
+      "reason": "`use measure::run_corpus` — `run_corpus` is not among sibling `measure`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use measure::CaseRecord` — `CaseRecord` is not among sibling `measure`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use measure::RunRecord` — `RunRecord` is not among sibling `measure`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 57,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use report :: { Honesty , LlmSection , Report } ;",
+      "reason": "`use report::Honesty` — `Honesty` is not among sibling `report`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use report::LlmSection` — `LlmSection` is not among sibling `report`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2); `use report::Report` — `Report` is not among sibling `report`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 58,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use scaling :: { run_scaling , ScalingOutcome , ScalingPoint , ScalingRun , ScalingSample } ;",
+      "reason": "`use scaling::run_scaling` — `run_scaling` is not among sibling `scaling`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:ScalingOutcome,ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 58,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use scaling :: { run_scaling , ScalingOutcome , ScalingPoint , ScalingRun , ScalingSample } ;",
+      "reason": "`use scaling::ScalingPoint` — `ScalingPoint` is not among sibling `scaling`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:ScalingOutcome,ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 58,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use scaling :: { run_scaling , ScalingOutcome , ScalingPoint , ScalingRun , ScalingSample } ;",
+      "reason": "`use scaling::ScalingRun` — `ScalingRun` is not among sibling `scaling`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:ScalingOutcome,ScalingSample"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 59,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "pub use verdict :: { classify , Speed , Verdict } ;",
+      "reason": "`use verdict::classify` — `classify` is not among sibling `verdict`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Speed,Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 61,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" The **canonical, bare** host tag (`\\\"<arch>-<os>, <N> hw threads\\\"`, no prose wrapper) — the form\"] # [doc = \" used for exact-match comparisons: [`verdict::RegressionBaseline::host_tag`] and the regression\"] # [doc = \" gate's host check. Kept separate from [`host_note_for_scaling`] (which wraps this same\"] # [doc = \" information in prose for human-readable report headers) so a regression gate never has to\"] # [doc = \" string-strip prose to recover the comparable tag — that mismatch (`\\\"host: ... (provenance\"] # [doc = \" only)\\\"` vs the bare tag) was a real bug caught while dogfooding this module (M-859), fixed by\"] # [doc = \" giving the exact-match comparison its own canonical, un-prosed form.\"] # [must_use] pub fn host_tag () -> String { let arch = std :: env :: consts :: ARCH ; let os = std :: env :: consts :: OS ; let threads = std :: thread :: available_parallelism () . map (std :: num :: NonZeroUsize :: get) . unwrap_or (0) ; format ! (\"{arch}-{os}, {threads} hw threads\") }",
+      "reason": "method call `.unwrap_or(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__unwrap_or` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `unwrap_or(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "host_tag"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 78,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "# [doc = \" Best-effort one-line host note for report provenance (target triple + hw thread count). No PII.\"] # [doc = \" Shared by the single-core report (`bin/bench.rs::host_note`, unchanged) and the scaling module —\"] # [doc = \" factored here so both projections stamp an identical host string for one run. Wraps\"] # [doc = \" [`host_tag`] in prose; NOT the form used for the regression gate's exact-match comparison (see\"] # [doc = \" [`host_tag`]'s doc for why the two are kept distinct).\"] # [must_use] pub fn host_note_for_scaling () -> String { format ! (\"host: {} (provenance only)\" , host_tag ()) }",
+      "reason": "`format!` — interpolation of `host_tag ()` has no known `Show` route in this scope (missing `TypeEnv` binding and not a literal `Bytes`/`Bool`/integer — honest gap, never fabricated text, G2/VR-5) (DN-127/M-1090 WU-3)",
+      "item_name": "host_note_for_scaling"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "line": 88,
+      "col": 1,
+      "category": "TestItem",
+      "rust_construct": "TestItem",
+      "snippet": "# [cfg (test)] mod tests ;",
+      "reason": "#[cfg(test)] item — out of scope for this PoC's transpilation surface (excluded from the expressible-fraction denominator, but recorded, never silently skipped)",
+      "item_name": "tests"
+    }
+  ],
+  "total_top_level_items": 18
+}

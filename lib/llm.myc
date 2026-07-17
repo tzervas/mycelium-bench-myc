@@ -1,0 +1,72 @@
+// nodule: bench.llm
+// Ingestion of the **LLM-harness** report (`tools/llm-harness/`) — read, never run. The language-
+// leverage data (KC-2 / SC-5b: per-validation quality + latency + token cost) sits in the unified
+// report alongside the execution-backend data, so both halves of "what are we getting out of this
+// lang" are in one place.
+//
+// **Honesty:** the harness marks a fixture run `mode: "mock"` (and each result `status: "mock-PASS"`);
+// a real model run is `mode: "real"`/`"server"`. This module *preserves* that label — a synthetic
+// sample is surfaced as SYNTHETIC and never presented as evidence of real model quality (VR-5, and
+// the harness's own V-03 rule). We bind to the harness's documented schema
+// (`tools/llm-harness/harness.py::_write_json_report`); unknown `detail` fields are kept opaque.
+//
+// ## Grok/xAI harness bridge
+//
+// The Grok co-author harness (`tools/llm-harness/`) emits a different schema than the bench
+// harness above. Both are ingested via the schema-dispatching [`parse_any_llm_json`] function:
+//
+// - **Bench schema** (`mycelium-llm-validation`): `{harness, version, run_id, mode, honesty_posture,
+//   summary, results}` — ingested via [`LlmReport::from_json`] (original path; unchanged).
+// - **Grok schema** (`mycelium-grok-coauthor`): `{metadata, honesty_posture, quality, performance,
+//   outcomes, ablation}` — ingested via [`GrokLlmReport::from_json`].
+//
+// Tagged dispatch in [`parse_any_llm_json`]: a top-level `"metadata"` key (an object) unambiguously
+// marks the Grok schema; its absence selects the bench schema. The two root shapes are structurally
+// distinct — no magic-string check on `harness` is needed.
+//
+// **Honesty (VR-5):** numeric metrics in [`GrokOutcome`] carry their own `guarantee_tag`
+// (`"Declared"` in the synthetic sample). [`parse_any_llm_json`] preserves that tag — never
+// upgrades. The `synthetic` flag from `honesty_posture` propagates so `is_synthetic` / the
+// "SYNTHETIC" label remain correct in the unified report.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.llm;
+
+// The honesty posture the harness stamps into every report.
+type HonestyPosture = HonestyPosture(Bool, Vec[Bytes], Vec[Bytes], Bytes);
+
+fn show_vec_Bytes(xs: Vec[Bytes]) => Bytes =
+  match xs { Nil => "Nil", Cons(h, t) => bytes_concat("Cons(", bytes_concat(render(h), bytes_concat(", ", bytes_concat(show_vec_Bytes(t), ")")))) };
+
+impl Show[HonestyPosture] for HonestyPosture {
+  fn render(x: HonestyPosture) => Bytes =
+    match x { HonestyPosture(p0, p1, p2, p3) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("HonestyPosture(", render(p0)), ", "), show_vec_Bytes(p1)), ", "), show_vec_Bytes(p2)), ", "), render(p3)), ")") };
+};
+
+// A never-silent ingestion error.
+pub type LlmIngestError = Io(Bytes) | Parse(Bytes);
+
+impl Show[LlmIngestError] for LlmIngestError {
+  fn render(x: LlmIngestError) => Bytes =
+    match x { Io(p0) => bytes_concat(bytes_concat("Io(", render(p0)), ")"), Parse(p0) => bytes_concat(bytes_concat("Parse(", render(p0)), ")") };
+};
+
+// Harness metadata block in the Grok report.
+type GrokMetadata = GrokMetadata(Bytes, Bytes, Bytes, Bytes, Bytes, Bytes, Binary{64}, Binary{32}, Bytes);
+
+impl Show[GrokMetadata] for GrokMetadata {
+  fn render(x: GrokMetadata) => Bytes =
+    match x { GrokMetadata(p0, p1, p2, p3, p4, p5, p6, p7, p8) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("GrokMetadata(", render(p0)), ", "), render(p1)), ", "), render(p2)), ", "), render(p3)), ", "), render(p4)), ", "), render(p5)), ", "), render(p6)), ", "), render(width_cast(p7, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), render(p8)), ")") };
+};
+
+// Honesty posture block in the Grok report. Extends the bench posture with `synthetic` flag.
+type GrokHonestyPosture = GrokHonestyPosture(Bool, Vec[Bytes], Vec[Bytes], Bytes, Bool, Bytes);
+
+impl Show[GrokHonestyPosture] for GrokHonestyPosture {
+  fn render(x: GrokHonestyPosture) => Bytes =
+    match x { GrokHonestyPosture(p0, p1, p2, p3, p4, p5) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("GrokHonestyPosture(", render(p0)), ", "), show_vec_Bytes(p1)), ", "), show_vec_Bytes(p2)), ", "), render(p3)), ", "), render(p4)), ", "), render(p5)), ")") };
+};
+
+// Aggregate quality metrics from the Grok report.
+type GrokQuality = GrokQuality(Binary{32}, Binary{32}, Binary{32}, Binary{32}, Binary{32}, Float, Float, Vec[Binary{32}], Float);

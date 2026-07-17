@@ -1,0 +1,30 @@
+// nodule: bench.timing
+// Dependency-light timing, in the house style (no `criterion`): a warmup pass, then the minimum
+// mean over several batches (the fastest batch's per-call mean — the least-noise estimate).
+// Mirrors `xtask/src/e1.rs::bench` so the two perf harnesses time the same way.
+//
+// **Honesty:** every number this produces is `Empirical` — a measurement, never a target (VR-5).
+// A debug build is *refused* for perf numbers ([`refuse_debug_build`]); micro-timing caveats
+// (warmup, process-spawn cost for the compiled paths, debug-vs-release) are surfaced in the report,
+// not buried.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.timing;
+
+// Default number of timed batches; the fastest batch's mean is reported (least-noise estimate).
+// Declared: co-emitted private const as zero-arg fn returning a BinLit — Mycelium has no const item production (`item` covers use/default/type/trait/impl/fn/object/lower/derive only); hand-port precedent `max_expr_depth()` (ORACLE-R1 A4; G2/VR-5: value from the Rust initializer or a known workspace-floor path, never fabricated). Use sites rewrite `NAME` → `NAME()`.
+fn BATCHES() => Binary{32} = 0b0000_0000_0000_0000_0000_0000_0000_0101; // 5
+
+// A single backend/case timing result: the per-call nanoseconds and the trial accounting that makes
+// the number honest (warmup iters, timed iters, batches, the batch spread).
+pub type Timing = Timing(Float, Binary{32}, Binary{32}, Float);
+
+impl Timing {
+  // The observed best/worst spread ratio (`worst / best`), `1.0` when only one batch was timed or
+  // the best was zero. A large ratio is a noise flag the report surfaces (microbench caveat).
+  fn spread(self: Timing) => Float = if (match self { Timing(p0, _, _, _) => p0 }) > 0.0 then (match self { Timing(_, _, _, p3) => p3 }) / (match self { Timing(p0, _, _, _) => p0 }) else 1.0;
+};
+
+// A tiny self-test fence so the closure is not optimised away in our own unit tests.
+fn fence[T](t: T) => T = black_box(t);

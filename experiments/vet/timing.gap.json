@@ -1,0 +1,152 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+  "emitted_items": [
+    "BATCHES",
+    "Timing",
+    "impl Timing",
+    "fence"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 10,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use std :: hint :: black_box ;",
+      "reason": "`use std.hint::black_box` — `std.hint` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 11,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use std :: time :: Instant ;",
+      "reason": "`use std.time::Instant` — `std.time` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 16,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" A single backend/case timing result: the per-call nanoseconds and the trial accounting that makes\"] # [doc = \" the number honest (warmup iters, timed iters, batches, the batch spread).\"] # [derive (Debug , Clone , Copy , PartialEq , serde :: Serialize)] pub struct Timing { # [doc = \" The reported per-call time: the mean of the fastest batch, in nanoseconds.\"] pub ns_per_call : f64 , # [doc = \" Iterations per batch (also the warmup count).\"] pub iters : u32 , # [doc = \" Number of timed batches.\"] pub batches : u32 , # [doc = \" The slowest batch's per-call mean, in ns — the honest upper end of the observed spread.\"] pub ns_per_call_worst : f64 , }",
+      "reason": "struct `Timing` named field(s) `ns_per_call, iters, batches, ns_per_call_worst` emitted positionally as `Timing(Float, Binary{32}, Binary{32}, Float)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped (matches `lib/std/*.myc` hand-ports)",
+      "item_name": "Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 16,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" A single backend/case timing result: the per-call nanoseconds and the trial accounting that makes\"] # [doc = \" the number honest (warmup iters, timed iters, batches, the batch spread).\"] # [derive (Debug , Clone , Copy , PartialEq , serde :: Serialize)] pub struct Timing { # [doc = \" The reported per-call time: the mean of the fastest batch, in nanoseconds.\"] pub ns_per_call : f64 , # [doc = \" Iterations per batch (also the warmup count).\"] pub iters : u32 , # [doc = \" Number of timed batches.\"] pub batches : u32 , # [doc = \" The slowest batch's per-call mean, in ns — the honest upper end of the observed spread.\"] pub ns_per_call_worst : f64 , }",
+      "reason": "struct `Timing` derive(Debug): field 0 has type `Float`, a primitive repr (or `Seq`/tuple/other bracketed shape) with no ambient `Show` instance in this file (`lib/std/fmt.myc`'s primitive impls live in a separate, unimported nodule) — the whole derive is left an honest gap rather than a partial/fabricated render (G2)",
+      "item_name": "Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 16,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" A single backend/case timing result: the per-call nanoseconds and the trial accounting that makes\"] # [doc = \" the number honest (warmup iters, timed iters, batches, the batch spread).\"] # [derive (Debug , Clone , Copy , PartialEq , serde :: Serialize)] pub struct Timing { # [doc = \" The reported per-call time: the mean of the fastest batch, in nanoseconds.\"] pub ns_per_call : f64 , # [doc = \" Iterations per batch (also the warmup count).\"] pub iters : u32 , # [doc = \" Number of timed batches.\"] pub batches : u32 , # [doc = \" The slowest batch's per-call mean, in ns — the honest upper end of the observed spread.\"] pub ns_per_call_worst : f64 , }",
+      "reason": "struct `Timing` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 16,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" A single backend/case timing result: the per-call nanoseconds and the trial accounting that makes\"] # [doc = \" the number honest (warmup iters, timed iters, batches, the batch spread).\"] # [derive (Debug , Clone , Copy , PartialEq , serde :: Serialize)] pub struct Timing { # [doc = \" The reported per-call time: the mean of the fastest batch, in nanoseconds.\"] pub ns_per_call : f64 , # [doc = \" Iterations per batch (also the warmup count).\"] pub iters : u32 , # [doc = \" Number of timed batches.\"] pub batches : u32 , # [doc = \" The slowest batch's per-call mean, in ns — the honest upper end of the observed spread.\"] pub ns_per_call_worst : f64 , }",
+      "reason": "struct `Timing` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 16,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" A single backend/case timing result: the per-call nanoseconds and the trial accounting that makes\"] # [doc = \" the number honest (warmup iters, timed iters, batches, the batch spread).\"] # [derive (Debug , Clone , Copy , PartialEq , serde :: Serialize)] pub struct Timing { # [doc = \" The reported per-call time: the mean of the fastest batch, in nanoseconds.\"] pub ns_per_call : f64 , # [doc = \" Iterations per batch (also the warmup count).\"] pub iters : u32 , # [doc = \" Number of timed batches.\"] pub batches : u32 , # [doc = \" The slowest batch's per-call mean, in ns — the honest upper end of the observed spread.\"] pub ns_per_call_worst : f64 , }",
+      "reason": "struct `Timing` derive(PartialEq): field 0 has type `Float` — a derived TOTAL equality over a float field is refused (ADR-040 §2.4 NaN semantics: NaN != NaN under IEEE-754, so a structural `and`-fold cannot honestly claim total equality here — matching Rust's own `derive(Eq)` refusal for `f64`) — the whole derive is left an honest gap rather than a silently-wrong equality (G2)",
+      "item_name": "Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 16,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" A single backend/case timing result: the per-call nanoseconds and the trial accounting that makes\"] # [doc = \" the number honest (warmup iters, timed iters, batches, the batch spread).\"] # [derive (Debug , Clone , Copy , PartialEq , serde :: Serialize)] pub struct Timing { # [doc = \" The reported per-call time: the mean of the fastest batch, in nanoseconds.\"] pub ns_per_call : f64 , # [doc = \" Iterations per batch (also the warmup count).\"] pub iters : u32 , # [doc = \" Number of timed batches.\"] pub batches : u32 , # [doc = \" The slowest batch's per-call mean, in ns — the honest upper end of the observed spread.\"] pub ns_per_call_worst : f64 , }",
+      "reason": "struct `Timing` derive(...) names serde :: Serialize not in the DN-128 standard-derive set this leaf builds (Debug/Default/Clone/Copy/PartialEq/PartialOrd/Hash all recognized; bare Eq/Ord are deliberately NOT recognized — see emit/derives/mod.rs::TABLE's doc for why) — dropped, no confirmed Mycelium surface",
+      "item_name": "Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 30,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl Timing { # [doc = \" The observed best/worst spread ratio (`worst / best`), `1.0` when only one batch was timed or\"] # [doc = \" the best was zero. A large ratio is a noise flag the report surfaces (microbench caveat).\"] # [must_use] pub fn spread (& self) -> f64 { if self . ns_per_call > 0.0 { self . ns_per_call_worst / self . ns_per_call } else { 1.0 } } }",
+      "reason": "dropped non-doc attribute(s) on method `spread`: # [must_use]",
+      "item_name": "impl Timing"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 43,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Time `f`: `iters` warmup calls, then [`BATCHES`] timed batches of `iters` calls each; report the\"] # [doc = \" fastest batch's per-call mean (and keep the slowest for the honest spread). `f` is `black_box`-fed\"] # [doc = \" at the call site by the caller; this only boxes nothing itself beyond the loop fence.\"] # [doc = \"\"] # [doc = \" `iters` is floored to `1` (never-panic: a zero is treated as one rather than dividing by zero or\"] # [doc = \" asserting). The closure is run `iters.max(1) * (1 + BATCHES)` times in total.\"] # [must_use] pub fn bench (iters : u32 , mut f : impl FnMut ()) -> Timing { let iters = iters . max (1) ; for _ in 0 .. iters { f () ; } let mut best = f64 :: INFINITY ; let mut worst = 0.0_f64 ; for _ in 0 .. BATCHES { let t = Instant :: now () ; for _ in 0 .. iters { f () ; } let elapsed = t . elapsed () ; # [allow (clippy :: cast_precision_loss)] let per_call = elapsed . as_nanos () as f64 / f64 :: from (iters) ; best = best . min (per_call) ; worst = worst . max (per_call) ; } Timing { ns_per_call : best , iters , batches : BATCHES , ns_per_call_worst : worst , } }",
+      "reason": "unsupported Rust type form `impl FnMut ()`",
+      "item_name": "bench"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 82,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "# [doc = \" `true` when this binary was compiled with debug assertions on (a debug build). Perf numbers from a\"] # [doc = \" debug build are meaningless; the harness refuses them.\"] # [must_use] pub fn is_debug_build () -> bool { cfg ! (debug_assertions) }",
+      "reason": "expression-position macro `cfg` — no macro system in this grammar fragment (`write!`/`format!` lower to pure `Bytes` per DN-127/M-1090 WU-3)",
+      "item_name": "is_debug_build"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 89,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Refuse to produce perf numbers from a debug build — print the fix and exit `2`. Called by the\"] # [doc = \" `bench` binary before any timing. (A debug build leaves overflow checks + no optimisation on, so a\"] # [doc = \" \\\"win\\\" or \\\"loss\\\" measured there would be a lie; G2 — never a misleading number.)\"] pub fn refuse_debug_build () { if is_debug_build () { eprintln ! (\"mycelium-bench: refusing to measure a debug build — run with `--release` \\\n             (`cargo run --release -p mycelium-bench --bin bench`). A debug build's timings are not \\\n             representative (no optimisation, overflow checks on), so a WIN/LOSS verdict from it \\\n             would be dishonest (VR-5/G2).\") ; std :: process :: exit (2) ; } }",
+      "reason": "function has no return type (implicit `()`) — no unit value is representable in this grammar fragment",
+      "item_name": "refuse_debug_build"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 104,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" A tiny self-test fence so the closure is not optimised away in our own unit tests.\"] # [doc (hidden)] # [must_use] pub fn fence < T > (t : T) -> T { black_box (t) }",
+      "reason": "dropped non-doc attribute(s) on fn `fence`: # [must_use]",
+      "item_name": "fence"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "line": 111,
+      "col": 1,
+      "category": "TestItem",
+      "rust_construct": "TestItem",
+      "snippet": "# [cfg (test)] mod tests { use super :: * ; # [test] fn bench_runs_the_closure_and_reports_a_finite_time () { let mut counter = 0u64 ; let t = bench (100 , | | { counter = counter . wrapping_add (fence (1)) ; }) ; assert_eq ! (counter , 100 * (1 + u64 :: from (BATCHES))) ; assert ! (t . ns_per_call . is_finite ()) ; assert_eq ! (t . iters , 100) ; assert_eq ! (t . batches , BATCHES) ; assert ! (t . ns_per_call <= t . ns_per_call_worst + f64 :: EPSILON) ; assert ! (t . spread () >= 1.0) ; } # [test] fn iters_floor_is_one () { let mut ran = 0u32 ; let _ = bench (0 , | | ran += 1) ; assert_eq ! (ran , 1 + BATCHES) ; } }",
+      "reason": "#[cfg(test)] item — out of scope for this PoC's transpilation surface (excluded from the expressible-fraction denominator, but recorded, never silently skipped)",
+      "item_name": "tests"
+    }
+  ],
+  "total_top_level_items": 10
+}

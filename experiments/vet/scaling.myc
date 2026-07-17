@@ -1,0 +1,58 @@
+// nodule: bench.scaling
+// **Multicore scaling curves** (M-859) — how a *batch of independent programs* on one backend
+// scales as worker count grows, via the real OS-thread [`Scheduler`](mycelium_std_runtime::scheduler::Scheduler)
+// (M-709/RFC-0008 RT1·RT2). Measurement only: no backend's semantics or execution path changes —
+// this module drives the *same* `run_once` dispatch (`crate::backend::run_once`) that the
+// single-core harness uses, just fanned out across a worker pool.
+//
+// ## What "scaling" means here
+// A **batch** is `N` independent invocations of the *same* corpus case (each one a fresh,
+// self-contained job: its own [`Node`] clone + its own [`Engines`]/artifact — no shared mutable
+// state crosses threads, matching the Scheduler's RT1 purity contract). We time the batch
+// sequentially (1 worker) and then across `2..=workers` OS threads, and report the **speedup**
+// (`t_1worker / t_Nworkers`) against the **ideal-linear** reference (`speedup == workers`).
+//
+// ## Honesty (VR-5)
+// - Every batch timing is **`Empirical`**: a wall-clock measurement over an explicit **trial count**
+//   (`ScalingPoint::batch_size` jobs × `ScalingPoint::repeats` repeated timed batches), on **this
+//   host** (`ScalingRun::host_note`). No number here is pre-written; the whole point is to *find
+//   out* whether/how far each backend scales.
+// - The **Amdahl serial-fraction estimate** derived from a scaling curve is `Empirical` (fit from
+//   the measured points) — it is a *derived statistic*, not a proof; it uses two points only (the
+//   1-worker and max-worker points) rather than a full least-squares fit, so it is a coarse,
+//   explicitly-labeled estimate, never a target.
+// - The **process-spawn-bound backends** (`direct-llvm`, `mlir-dialect`, via
+//   [`Backend::is_process_spawn_bound`]) are flagged in the scaling report exactly as they are in
+//   the single-core report: for a trivial kernel, scaling a *spawn-dominated* per-job cost mostly
+//   measures OS process-creation contention, not kernel compute — surfaced, not buried.
+// - A **skip** (toolchain absent / capability loss on the case) is recorded as [`ScalingOutcome::Skipped`]/
+//   [`ScalingOutcome::Unmeasurable`] — never silently dropped from the curve (G2).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.scaling;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.backend) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Backend = Interp | AotEnv | Jit | DirectLlvm | MlirDialect;
+type Outcome = Value(Box[CoreValue]) | Skipped(Bytes) | Unlowerable(Bytes) | Error(Bytes);
+// EXPLAIN (G-α L2-B/DN-124): Declared co-include of batch-sibling free-fn surface (homes: bench.backend) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Type deps on the fn line are co-included above when present in-batch. Body free-fn/method callees may still residual-poison oracle (FLAG, not silent). G2/VR-5.
+fn run_once(backend: Backend, node: Node, eng: Engines) => Outcome = match backend { Interp => run_interp(node, eng), AotEnv => run_aot_env(node, eng), Jit => run_jit(node), DirectLlvm => run_direct_llvm(node), MlirDialect => run_mlir_dialect(node) };
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.corpus) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Fragment = BitSubset | Data | Recursion | Swap;
+type Case = Case(Bytes, Bytes, Fragment, Bytes);
+
+// One batch-timing measurement: `batch_size` independent jobs run across `workers` OS threads.
+pub type ScalingSample = ScalingSample(Binary{64}, Float, Float);
+
+// Why a case could not be scaling-measured on a backend — never-silent (G2): a scaling curve that
+// could not be built still says *why*, it does not just omit the backend.
+pub type ScalingOutcome = Measured(Vec[ScalingSample]) | Skipped(Bytes) | Unmeasurable(Bytes);
+
+fn show_vec_ScalingSample(xs: Vec[ScalingSample]) => Bytes =
+  match xs { Nil => "Nil", Cons(h, t) => bytes_concat("Cons(", bytes_concat(render(h), bytes_concat(", ", bytes_concat(show_vec_ScalingSample(t), ")")))) };
+
+impl Show[ScalingOutcome] for ScalingOutcome {
+  fn render(x: ScalingOutcome) => Bytes =
+    match x { Measured(p0) => bytes_concat(bytes_concat("Measured(", show_vec_ScalingSample(p0)), ")"), Skipped(p0) => bytes_concat(bytes_concat("Skipped(", render(p0)), ")"), Unmeasurable(p0) => bytes_concat(bytes_concat("Unmeasurable(", render(p0)), ")") };
+};

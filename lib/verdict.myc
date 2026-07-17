@@ -1,0 +1,114 @@
+// nodule: bench.verdict
+// The **WIN / LOSS / REGRESSION classifier** — the honest core of the harness. For each non-baseline
+// backend on each case, it compares against the trusted interpreter and emits an explicit verdict.
+// This module is pure (no I/O, no timing of its own), so the classification is exhaustively unit-
+// testable and deterministic.
+//
+// The honesty discipline, made mechanical:
+// - A backend whose result **diverges** from the interpreter's is a **correctness LOSS** — recorded,
+//   never hidden. (A divergence is the worst kind of loss: a wrong answer faster is still wrong.)
+// - A backend that **cannot lower** the program is a **capability LOSS**, with the reason (G2).
+// - When both agree, the speed comparison yields **WIN** / **LOSS** / **NEUTRAL** vs the interpreter
+//   — tagged `Empirical`, with no pre-written target (VR-5). The "loss" here means *slower than the
+//   trusted in-process interpreter*, which for a trivial kernel is the expected, honest finding for
+//   a process-spawn-bound compiled path (M-602/E1) — surfaced with that reason, not buried.
+// - A backend that was only **skipped** (toolchain absent) yields no verdict — the harness could not
+//   measure it here; that is neither a win nor a loss.
+//
+// ## Regression gates (M-859) — this-run-vs-committed-baseline
+// The classifier above compares a backend **against the interpreter, same run**. The
+// [`RegressionGate`]/[`regression_classify`] pair below is a *second*, orthogonal comparison: this
+// run's `ns_per_call` for a (case, backend) **against a committed baseline JSON** captured on a
+// specific host — the day-to-day "did we get faster or slower since the baseline was taken"
+// question. Both comparisons coexist; neither replaces the other (the interpreter differential is
+// still how a divergence/capability loss is caught; the regression gate is purely a speed trend).
+//
+// **Honesty:** a regression verdict is `Empirical`, exactly like a speed verdict — measured, with
+// the [`RegressionGate::REGRESSION_BAND`] threshold reified (no black box), and it is **only ever
+// compared against a baseline captured on the *same host tag*** — cross-host comparison is refused
+// (a different host's numbers are not portable; see [`RegressionOutcome::HostMismatch`]).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.verdict;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.backend) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Backend = Interp | AotEnv | Jit | DirectLlvm | MlirDialect;
+type Outcome = Value(Box[CoreValue]) | Skipped(Bytes) | Unlowerable(Bytes) | Error(Bytes);
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.timing) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Timing = Timing(Float, Binary{32}, Binary{32}, Float);
+
+// The speed comparison band of a backend vs the interpreter, once both produced an *equal* value.
+// `Empirical`, with the threshold reified (no black box). A ratio is `interp_ns / backend_ns`:
+// `> 1` means the backend is faster than the interpreter (a win); `< 1` means slower (a loss).
+pub type Speed = Win | Neutral | Loss;
+
+impl Show[Speed] for Speed {
+  fn render(x: Speed) => Bytes =
+    match x { Win => "Win", Neutral => "Neutral", Loss => "Loss" };
+};
+
+fn eq_Speed(a: Speed, b: Speed) => Binary{1} =
+  match a { Win => match b { Win => 0b1, _ => 0b0 }, Neutral => match b { Neutral => 0b1, _ => 0b0 }, Loss => match b { Loss => 0b1, _ => 0b0 } };
+
+// The full classification of one (backend, case) pair vs the trusted interpreter baseline.
+pub type Verdict = SpeedWin(Binary{64}) | SpeedNeutral(Binary{64}) | SpeedLoss(Binary{64}, Bytes) | CorrectnessLoss(Bytes) | CapabilityLoss(Bytes) | RuntimeError(Bytes) | Skipped(Bytes) | BaselineFailed(Bytes);
+
+impl Show[Verdict] for Verdict {
+  fn render(x: Verdict) => Bytes =
+    match x { SpeedWin(p0) => bytes_concat(bytes_concat("SpeedWin(", render(p0)), ")"), SpeedNeutral(p0) => bytes_concat(bytes_concat("SpeedNeutral(", render(p0)), ")"), SpeedLoss(p0, p1) => bytes_concat(bytes_concat(bytes_concat(bytes_concat("SpeedLoss(", render(p0)), ", "), render(p1)), ")"), CorrectnessLoss(p0) => bytes_concat(bytes_concat("CorrectnessLoss(", render(p0)), ")"), CapabilityLoss(p0) => bytes_concat(bytes_concat("CapabilityLoss(", render(p0)), ")"), RuntimeError(p0) => bytes_concat(bytes_concat("RuntimeError(", render(p0)), ")"), Skipped(p0) => bytes_concat(bytes_concat("Skipped(", render(p0)), ")"), BaselineFailed(p0) => bytes_concat(bytes_concat("BaselineFailed(", render(p0)), ")") };
+};
+
+fn eq_Verdict(a: Verdict, b: Verdict) => Binary{1} =
+  match a { SpeedWin(p0) => match b { SpeedWin(q0) => eq(p0, q0), _ => 0b0 }, SpeedNeutral(p0) => match b { SpeedNeutral(q0) => eq(p0, q0), _ => 0b0 }, SpeedLoss(p0, p1) => match b { SpeedLoss(q0, q1) => and(eq(p0, q0), bytes_eq(p1, q1)), _ => 0b0 }, CorrectnessLoss(p0) => match b { CorrectnessLoss(q0) => bytes_eq(p0, q0), _ => 0b0 }, CapabilityLoss(p0) => match b { CapabilityLoss(q0) => bytes_eq(p0, q0), _ => 0b0 }, RuntimeError(p0) => match b { RuntimeError(q0) => bytes_eq(p0, q0), _ => 0b0 }, Skipped(p0) => match b { Skipped(q0) => bytes_eq(p0, q0), _ => 0b0 }, BaselineFailed(p0) => match b { BaselineFailed(q0) => bytes_eq(p0, q0), _ => 0b0 } };
+
+impl Verdict {
+  // A short status word for the report table.
+  fn status(self: Verdict) => Bytes = match self { SpeedWin(_) => "WIN", SpeedNeutral(_) => "neutral", SpeedLoss(_, _) => "LOSS (speed)", CorrectnessLoss(_) => "LOSS (correctness)", CapabilityLoss(_) => "LOSS (capability)", RuntimeError(_) => "error", Skipped(_) => "skipped", BaselineFailed(_) => "baseline-failed" };
+  // The honest guarantee tag for this verdict. A measured speed band is `Empirical`; a capability
+  // loss / runtime error / skip is `Declared` (an observed fact about the run, not a trial mean).
+  fn guarantee_tag(self: Verdict) => Bytes = match self { SpeedWin(_) | SpeedNeutral(_) | SpeedLoss(_, _) | CorrectnessLoss(_) => "Empirical", CapabilityLoss(_) | RuntimeError(_) | Skipped(_) | BaselineFailed(_) => "Declared" };
+};
+
+// One committed baseline timing: a (case, backend) `ns_per_call` snapshot from a prior run, plus the
+// host tag it was captured on (regression gates never compare across hosts — see
+// [`RegressionOutcome::HostMismatch`]).
+type BaselineEntry = BaselineEntry(Bytes, Bytes, Float);
+
+// A committed regression baseline: a host tag (provenance — see [`crate::host_note_for_scaling`]'s
+// sibling convention) plus every `(case, backend)` timing captured on that host at commit time.
+// This is the artifact `regression_classify` compares a fresh run against — **not** a target to hit
+// (VR-5): a REGRESSION row means "slower than this baseline was, on this host", nothing more.
+pub type RegressionBaseline = RegressionBaseline(Bytes, Bytes, Binary{32}, Vec[BaselineEntry]);
+
+fn show_vec_BaselineEntry(xs: Vec[BaselineEntry]) => Bytes =
+  match xs { Nil => "Nil", Cons(h, t) => bytes_concat("Cons(", bytes_concat(render(h), bytes_concat(", ", bytes_concat(show_vec_BaselineEntry(t), ")")))) };
+
+impl Show[RegressionBaseline] for RegressionBaseline {
+  fn render(x: RegressionBaseline) => Bytes =
+    match x { RegressionBaseline(p0, p1, p2, p3) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("RegressionBaseline(", render(p0)), ", "), render(p1)), ", "), render(width_cast(p2, 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000))), ", "), show_vec_BaselineEntry(p3)), ")") };
+};
+
+fn eq_vec_BaselineEntry(a: Vec[BaselineEntry], b: Vec[BaselineEntry]) => Binary{1} =
+  match a { Nil => match b { Nil => 0b1, Cons(_, _) => 0b0 }, Cons(ha, ta) => match b { Nil => 0b0, Cons(hb, tb) => and(eq_BaselineEntry(ha, hb), eq_vec_BaselineEntry(ta, tb)) } };
+
+fn eq_RegressionBaseline(a: RegressionBaseline, b: RegressionBaseline) => Binary{1} =
+    match a { RegressionBaseline(p0, p1, p2, p3) => match b { RegressionBaseline(q0, q1, q2, q3) => and(and(and(bytes_eq(p0, q0), bytes_eq(p1, q1)), eq(p2, q2)), eq_vec_BaselineEntry(p3, q3)) } };
+
+// The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.
+pub type RegressionOutcome = Improvement(Binary{64}) | Hold(Binary{64}) | Regression(Binary{64}) | NotTimed | NoBaseline | HostMismatch(Bytes, Bytes);
+
+impl Show[RegressionOutcome] for RegressionOutcome {
+  fn render(x: RegressionOutcome) => Bytes =
+    match x { Improvement(p0) => bytes_concat(bytes_concat("Improvement(", render(p0)), ")"), Hold(p0) => bytes_concat(bytes_concat("Hold(", render(p0)), ")"), Regression(p0) => bytes_concat(bytes_concat("Regression(", render(p0)), ")"), NotTimed => "NotTimed", NoBaseline => "NoBaseline", HostMismatch(p0, p1) => bytes_concat(bytes_concat(bytes_concat(bytes_concat("HostMismatch(", render(p0)), ", "), render(p1)), ")") };
+};
+
+fn eq_RegressionOutcome(a: RegressionOutcome, b: RegressionOutcome) => Binary{1} =
+  match a { Improvement(p0) => match b { Improvement(q0) => eq(p0, q0), _ => 0b0 }, Hold(p0) => match b { Hold(q0) => eq(p0, q0), _ => 0b0 }, Regression(p0) => match b { Regression(q0) => eq(p0, q0), _ => 0b0 }, NotTimed => match b { NotTimed => 0b1, _ => 0b0 }, NoBaseline => match b { NoBaseline => 0b1, _ => 0b0 }, HostMismatch(p0, p1) => match b { HostMismatch(q0, q1) => and(bytes_eq(p0, q0), bytes_eq(p1, q1)), _ => 0b0 } };
+
+impl RegressionOutcome {
+  // A short status word for the report table.
+  // Declared: renamed `impl RegressionOutcome { fn status }` -> `_17RegressionOutcome6status` (D4 inherent-impl flat-fn desugar + DN-140 length-prefix mangle, M-664).
+  fn _17RegressionOutcome6status(self: RegressionOutcome) => Bytes = match self { Improvement(_) => "WIN (vs baseline)", Hold(_) => "hold", Regression(_) => "REGRESSION", NotTimed => "not-timed", NoBaseline => "no-baseline", HostMismatch(_, _) => "host-mismatch" };
+};

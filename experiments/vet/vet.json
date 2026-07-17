@@ -1,0 +1,189 @@
+{
+  "records": [
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/backend.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `Outcome`: unknown type `Box`",
+      "non_test_items": 24,
+      "emitted_items": 6
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/bin/bench.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/bin/bench.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `neutral_band`: unknown name `NEUTRAL_BAND`",
+      "non_test_items": 18,
+      "emitted_items": 3
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/corpus.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/corpus.rs",
+      "class": "Clean",
+      "exit_code": 0,
+      "diagnostic": "",
+      "non_test_items": 10,
+      "emitted_items": 4
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/lib.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/lib.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `Outcome`: unknown type `Box`",
+      "non_test_items": 9,
+      "emitted_items": 4
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/llm.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/llm.rs",
+      "class": "Clean",
+      "exit_code": 0,
+      "diagnostic": "",
+      "non_test_items": 22,
+      "emitted_items": 5
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/measure.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/measure.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `Outcome`: unknown type `Box`",
+      "non_test_items": 12,
+      "emitted_items": 5
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/report.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/report.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `neutral_band`: unknown name `NEUTRAL_BAND`",
+      "non_test_items": 22,
+      "emitted_items": 6
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/scaling.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/scaling.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `Outcome`: unknown type `Box`",
+      "non_test_items": 14,
+      "emitted_items": 4
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/timing.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/timing.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `fence`: unknown function/constructor/prim `black_box`",
+      "non_test_items": 9,
+      "emitted_items": 4
+    },
+    {
+      "myc_file": "/tmp/myc-decompose/work/mycelium-bench-myc/experiments/vet/verdict.myc",
+      "source_file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "class": "CheckError",
+      "exit_code": 3,
+      "diagnostic": "check-error: check error in `Outcome`: unknown type `Box`",
+      "non_test_items": 15,
+      "emitted_items": 9
+    }
+  ],
+  "total_non_test_items": 155,
+  "total_emitted_items": 50,
+  "total_checked_clean_items": 9,
+  "class_counts": {
+    "CheckError": 8,
+    "Clean": 2
+  },
+  "phylum": {
+    "ran": true,
+    "ok": false,
+    "nodules": [
+      {
+        "nodule": "bench.backend",
+        "file": "backend.myc",
+        "class": "CheckError",
+        "site": "Outcome",
+        "on": null,
+        "message": "unknown type `Box`"
+      },
+      {
+        "nodule": "bench.bin_kw.bench",
+        "file": "bin/bench.myc",
+        "class": "CheckError",
+        "site": "neutral_band",
+        "on": null,
+        "message": "unknown name `NEUTRAL_BAND`"
+      },
+      {
+        "nodule": "bench.corpus",
+        "file": "corpus.myc",
+        "class": "Clean",
+        "site": null,
+        "on": null,
+        "message": null
+      },
+      {
+        "nodule": "bench",
+        "file": "lib.myc",
+        "class": "CheckError",
+        "site": "Outcome",
+        "on": null,
+        "message": "unknown type `Box`"
+      },
+      {
+        "nodule": "bench.llm",
+        "file": "llm.myc",
+        "class": "Clean",
+        "site": null,
+        "on": null,
+        "message": null
+      },
+      {
+        "nodule": "bench.measure",
+        "file": "measure.myc",
+        "class": "CheckError",
+        "site": "Outcome",
+        "on": null,
+        "message": "unknown type `Box`"
+      },
+      {
+        "nodule": "bench.report",
+        "file": "report.myc",
+        "class": "CheckError",
+        "site": "neutral_band",
+        "on": null,
+        "message": "unknown name `NEUTRAL_BAND`"
+      },
+      {
+        "nodule": "bench.scaling",
+        "file": "scaling.myc",
+        "class": "CheckError",
+        "site": "Outcome",
+        "on": null,
+        "message": "unknown type `Box`"
+      },
+      {
+        "nodule": "bench.timing",
+        "file": "timing.myc",
+        "class": "CheckError",
+        "site": "fence",
+        "on": null,
+        "message": "unknown function/constructor/prim `black_box`"
+      },
+      {
+        "nodule": "bench.verdict",
+        "file": "verdict.myc",
+        "class": "CheckError",
+        "site": "Outcome",
+        "on": null,
+        "message": "unknown type `Box`"
+      }
+    ],
+    "diagnostic": "unknown type `Box`"
+  },
+  "total_checked_clean_items_phylum": 9
+}

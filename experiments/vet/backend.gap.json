@@ -1,0 +1,374 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+  "emitted_items": [
+    "co-emit:Option",
+    "Backend",
+    "impl Backend",
+    "Outcome",
+    "impl Outcome",
+    "run_once"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 12,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_cert :: BinaryTernarySwapEngine ;",
+      "reason": "`use mycelium_cert::BinaryTernarySwapEngine` — `mycelium_cert` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 13,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_core :: { CoreValue , Node } ;",
+      "reason": "`use mycelium_core::CoreValue` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_core::Node` — `mycelium_core` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 14,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_interp :: { Interpreter , PrimRegistry } ;",
+      "reason": "`use mycelium_interp::Interpreter` — `mycelium_interp` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2); `use mycelium_interp::PrimRegistry` — `mycelium_interp` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 15,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use mycelium_mlir :: AotError ;",
+      "reason": "`use mycelium_mlir::AotError` — `mycelium_mlir` is not a sibling module OR sibling phylum transpiled in this same batch (an external crate, `std`, or simply out of this batch's target set). Flagged, not guessed (VR-5/G2)",
+      "item_name": null
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 17,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" One of the execution backends being measured. `Interp` is the trusted base; the rest are compared\"] # [doc = \" against it.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Backend { # [doc = \" The reference interpreter (trusted base, NFR-7) — small-step substitution, in-process.\"] Interp , # [doc = \" The AOT env-machine (`mycelium_mlir::run_core`) — a big-step ANF evaluator, in-process.\"] AotEnv , # [doc = \" The JIT backend (`mycelium_mlir::jit_run`) — emits LLVM IR, `clang -shared`, `dlopen`, call.\"] Jit , # [doc = \" The direct-LLVM backend (`mycelium_mlir::compile_and_run`) — emits LLVM IR, `llc`+`clang`,\"] # [doc = \" native artifact, run + read-back stdout.\"] DirectLlvm , # [doc = \" The MLIR-dialect path (`mycelium_mlir::mlir_compile_and_run`, behind the `mlir-dialect`\"] # [doc = \" feature) — emits an `arith`/`func` MLIR module, drives it through `mlir-opt`/`mlir-translate`\"] # [doc = \" + `clang`. Records a Skip when the feature is off or the libMLIR toolchain is absent.\"] MlirDialect , }",
+      "reason": "dropped non-doc non-derive attribute(s) on enum `Backend`: # [serde (rename_all = \"kebab-case\")]",
+      "item_name": "Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 17,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One of the execution backends being measured. `Interp` is the trusted base; the rest are compared\"] # [doc = \" against it.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Backend { # [doc = \" The reference interpreter (trusted base, NFR-7) — small-step substitution, in-process.\"] Interp , # [doc = \" The AOT env-machine (`mycelium_mlir::run_core`) — a big-step ANF evaluator, in-process.\"] AotEnv , # [doc = \" The JIT backend (`mycelium_mlir::jit_run`) — emits LLVM IR, `clang -shared`, `dlopen`, call.\"] Jit , # [doc = \" The direct-LLVM backend (`mycelium_mlir::compile_and_run`) — emits LLVM IR, `llc`+`clang`,\"] # [doc = \" native artifact, run + read-back stdout.\"] DirectLlvm , # [doc = \" The MLIR-dialect path (`mycelium_mlir::mlir_compile_and_run`, behind the `mlir-dialect`\"] # [doc = \" feature) — emits an `arith`/`func` MLIR module, drives it through `mlir-opt`/`mlir-translate`\"] # [doc = \" + `clang`. Records a Skip when the feature is off or the libMLIR toolchain is absent.\"] MlirDialect , }",
+      "reason": "enum `Backend` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 17,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One of the execution backends being measured. `Interp` is the trusted base; the rest are compared\"] # [doc = \" against it.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Backend { # [doc = \" The reference interpreter (trusted base, NFR-7) — small-step substitution, in-process.\"] Interp , # [doc = \" The AOT env-machine (`mycelium_mlir::run_core`) — a big-step ANF evaluator, in-process.\"] AotEnv , # [doc = \" The JIT backend (`mycelium_mlir::jit_run`) — emits LLVM IR, `clang -shared`, `dlopen`, call.\"] Jit , # [doc = \" The direct-LLVM backend (`mycelium_mlir::compile_and_run`) — emits LLVM IR, `llc`+`clang`,\"] # [doc = \" native artifact, run + read-back stdout.\"] DirectLlvm , # [doc = \" The MLIR-dialect path (`mycelium_mlir::mlir_compile_and_run`, behind the `mlir-dialect`\"] # [doc = \" feature) — emits an `arith`/`func` MLIR module, drives it through `mlir-opt`/`mlir-translate`\"] # [doc = \" + `clang`. Records a Skip when the feature is off or the libMLIR toolchain is absent.\"] MlirDialect , }",
+      "reason": "enum `Backend` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 17,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One of the execution backends being measured. `Interp` is the trusted base; the rest are compared\"] # [doc = \" against it.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Backend { # [doc = \" The reference interpreter (trusted base, NFR-7) — small-step substitution, in-process.\"] Interp , # [doc = \" The AOT env-machine (`mycelium_mlir::run_core`) — a big-step ANF evaluator, in-process.\"] AotEnv , # [doc = \" The JIT backend (`mycelium_mlir::jit_run`) — emits LLVM IR, `clang -shared`, `dlopen`, call.\"] Jit , # [doc = \" The direct-LLVM backend (`mycelium_mlir::compile_and_run`) — emits LLVM IR, `llc`+`clang`,\"] # [doc = \" native artifact, run + read-back stdout.\"] DirectLlvm , # [doc = \" The MLIR-dialect path (`mycelium_mlir::mlir_compile_and_run`, behind the `mlir-dialect`\"] # [doc = \" feature) — emits an `arith`/`func` MLIR module, drives it through `mlir-opt`/`mlir-translate`\"] # [doc = \" + `clang`. Records a Skip when the feature is off or the libMLIR toolchain is absent.\"] MlirDialect , }",
+      "reason": "enum `Backend` derive(Eq): covered by co-occurring PartialEq → `fn eq_Backend` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 17,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" One of the execution backends being measured. `Interp` is the trusted base; the rest are compared\"] # [doc = \" against it.\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , Hash , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Backend { # [doc = \" The reference interpreter (trusted base, NFR-7) — small-step substitution, in-process.\"] Interp , # [doc = \" The AOT env-machine (`mycelium_mlir::run_core`) — a big-step ANF evaluator, in-process.\"] AotEnv , # [doc = \" The JIT backend (`mycelium_mlir::jit_run`) — emits LLVM IR, `clang -shared`, `dlopen`, call.\"] Jit , # [doc = \" The direct-LLVM backend (`mycelium_mlir::compile_and_run`) — emits LLVM IR, `llc`+`clang`,\"] # [doc = \" native artifact, run + read-back stdout.\"] DirectLlvm , # [doc = \" The MLIR-dialect path (`mycelium_mlir::mlir_compile_and_run`, behind the `mlir-dialect`\"] # [doc = \" feature) — emits an `arith`/`func` MLIR module, drives it through `mlir-opt`/`mlir-translate`\"] # [doc = \" + `clang`. Records a Skip when the feature is off or the libMLIR toolchain is absent.\"] MlirDialect , }",
+      "reason": "enum `Backend` derive(...) names Hash, serde :: Serialize not in the DN-128 enum-derive set this leaf builds (Debug/PartialEq/Clone/Copy recognized; bare Eq is a satisfied co-occurrence note; Hash/PartialOrd/Ord/Default stay product-only for now) — dropped, no confirmed Mycelium surface",
+      "item_name": "Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 37,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "impl Backend { # [doc = \" All backends, in a stable order (interp first — it is the differential baseline).\"] # [must_use] pub fn all () -> [Backend ; 5] { [Backend :: Interp , Backend :: AotEnv , Backend :: Jit , Backend :: DirectLlvm , Backend :: MlirDialect ,] } # [doc = \" A short, stable label for the report (matches the serde rename).\"] # [must_use] pub fn label (self) -> & 'static str { match self { Backend :: Interp => \"interp\" , Backend :: AotEnv => \"aot-env\" , Backend :: Jit => \"jit\" , Backend :: DirectLlvm => \"direct-llvm\" , Backend :: MlirDialect => \"mlir-dialect\" , } } # [doc = \" Whether this backend is the trusted differential baseline.\"] # [must_use] pub fn is_baseline (self) -> bool { matches ! (self , Backend :: Interp) } # [doc = \" Whether this backend executes a freshly-spawned process per invocation (a microbench caveat\"] # [doc = \" the report surfaces: for a trivial kernel the per-invocation time is spawn-dominated, exactly\"] # [doc = \" the honest M-602/E1 finding). JIT `dlopen`s an in-process `.so` and calls it directly, so it is\"] # [doc = \" **not** spawn-bound; direct-LLVM and the MLIR-dialect path exec a native artifact per call.\"] # [must_use] pub fn is_process_spawn_bound (self) -> bool { matches ! (self , Backend :: DirectLlvm | Backend :: MlirDialect) } }",
+      "reason": "impl method `all` signature: unsupported Rust type form `[Backend ; 5]`",
+      "item_name": "impl Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 37,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl Backend { # [doc = \" All backends, in a stable order (interp first — it is the differential baseline).\"] # [must_use] pub fn all () -> [Backend ; 5] { [Backend :: Interp , Backend :: AotEnv , Backend :: Jit , Backend :: DirectLlvm , Backend :: MlirDialect ,] } # [doc = \" A short, stable label for the report (matches the serde rename).\"] # [must_use] pub fn label (self) -> & 'static str { match self { Backend :: Interp => \"interp\" , Backend :: AotEnv => \"aot-env\" , Backend :: Jit => \"jit\" , Backend :: DirectLlvm => \"direct-llvm\" , Backend :: MlirDialect => \"mlir-dialect\" , } } # [doc = \" Whether this backend is the trusted differential baseline.\"] # [must_use] pub fn is_baseline (self) -> bool { matches ! (self , Backend :: Interp) } # [doc = \" Whether this backend executes a freshly-spawned process per invocation (a microbench caveat\"] # [doc = \" the report surfaces: for a trivial kernel the per-invocation time is spawn-dominated, exactly\"] # [doc = \" the honest M-602/E1 finding). JIT `dlopen`s an in-process `.so` and calls it directly, so it is\"] # [doc = \" **not** spawn-bound; direct-LLVM and the MLIR-dialect path exec a native artifact per call.\"] # [must_use] pub fn is_process_spawn_bound (self) -> bool { matches ! (self , Backend :: DirectLlvm | Backend :: MlirDialect) } }",
+      "reason": "dropped non-doc attribute(s) on method `label`: # [must_use]",
+      "item_name": "impl Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 37,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "impl Backend { # [doc = \" All backends, in a stable order (interp first — it is the differential baseline).\"] # [must_use] pub fn all () -> [Backend ; 5] { [Backend :: Interp , Backend :: AotEnv , Backend :: Jit , Backend :: DirectLlvm , Backend :: MlirDialect ,] } # [doc = \" A short, stable label for the report (matches the serde rename).\"] # [must_use] pub fn label (self) -> & 'static str { match self { Backend :: Interp => \"interp\" , Backend :: AotEnv => \"aot-env\" , Backend :: Jit => \"jit\" , Backend :: DirectLlvm => \"direct-llvm\" , Backend :: MlirDialect => \"mlir-dialect\" , } } # [doc = \" Whether this backend is the trusted differential baseline.\"] # [must_use] pub fn is_baseline (self) -> bool { matches ! (self , Backend :: Interp) } # [doc = \" Whether this backend executes a freshly-spawned process per invocation (a microbench caveat\"] # [doc = \" the report surfaces: for a trivial kernel the per-invocation time is spawn-dominated, exactly\"] # [doc = \" the honest M-602/E1 finding). JIT `dlopen`s an in-process `.so` and calls it directly, so it is\"] # [doc = \" **not** spawn-bound; direct-LLVM and the MLIR-dialect path exec a native artifact per call.\"] # [must_use] pub fn is_process_spawn_bound (self) -> bool { matches ! (self , Backend :: DirectLlvm | Backend :: MlirDialect) } }",
+      "reason": "impl method `is_baseline` body: expression-position macro `matches` — no macro system in this grammar fragment (`write!`/`format!` lower to pure `Bytes` per DN-127/M-1090 WU-3)",
+      "item_name": "impl Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 37,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "impl Backend { # [doc = \" All backends, in a stable order (interp first — it is the differential baseline).\"] # [must_use] pub fn all () -> [Backend ; 5] { [Backend :: Interp , Backend :: AotEnv , Backend :: Jit , Backend :: DirectLlvm , Backend :: MlirDialect ,] } # [doc = \" A short, stable label for the report (matches the serde rename).\"] # [must_use] pub fn label (self) -> & 'static str { match self { Backend :: Interp => \"interp\" , Backend :: AotEnv => \"aot-env\" , Backend :: Jit => \"jit\" , Backend :: DirectLlvm => \"direct-llvm\" , Backend :: MlirDialect => \"mlir-dialect\" , } } # [doc = \" Whether this backend is the trusted differential baseline.\"] # [must_use] pub fn is_baseline (self) -> bool { matches ! (self , Backend :: Interp) } # [doc = \" Whether this backend executes a freshly-spawned process per invocation (a microbench caveat\"] # [doc = \" the report surfaces: for a trivial kernel the per-invocation time is spawn-dominated, exactly\"] # [doc = \" the honest M-602/E1 finding). JIT `dlopen`s an in-process `.so` and calls it directly, so it is\"] # [doc = \" **not** spawn-bound; direct-LLVM and the MLIR-dialect path exec a native artifact per call.\"] # [must_use] pub fn is_process_spawn_bound (self) -> bool { matches ! (self , Backend :: DirectLlvm | Backend :: MlirDialect) } }",
+      "reason": "impl method `is_process_spawn_bound` body: expression-position macro `matches` — no macro system in this grammar fragment (`write!`/`format!` lower to pure `Bytes` per DN-127/M-1090 WU-3)",
+      "item_name": "impl Backend"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 78,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The result of running one backend on one case — uniform across backends, never-silent.\"] # [derive (Debug , Clone)] pub enum Outcome { # [doc = \" The backend produced a value (lifted to a [`CoreValue`] for the differential — a bare-`Value`\"] # [doc = \" backend is wrapped as `CoreValue::Repr`). Boxed: a `CoreValue` is far larger than the small\"] # [doc = \" `String` reason variants, so boxing keeps the enum compact (clippy `large_enum_variant`).\"] Value (Box < CoreValue >) , # [doc = \" The backend was skipped for an *environmental* reason (a missing toolchain / a feature that is\"] # [doc = \" off). NOT a loss — the harness simply could not measure it here. Carries the reason.\"] Skipped (String) , # [doc = \" The backend *cannot* lower this program — an explicit unlowerable/unsupported node. This is a\"] # [doc = \" recorded **capability loss** with its reason (G2: never omitted).\"] Unlowerable (String) , # [doc = \" The backend errored at run time (overflow, depth limit, a compile/exec failure that is not a\"] # [doc = \" toolchain-absence skip). A recorded failure, surfaced honestly.\"] Error (String) , }",
+      "reason": "enum `Outcome` derive(Debug): variant 0 (`Value`) field 0 has type `Box[CoreValue]`, a primitive repr (or `Seq`/tuple/other bracketed shape) with no ambient `Show` instance in this file — the whole derive is left an honest gap rather than a partial/fabricated render (G2)",
+      "item_name": "Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 78,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The result of running one backend on one case — uniform across backends, never-silent.\"] # [derive (Debug , Clone)] pub enum Outcome { # [doc = \" The backend produced a value (lifted to a [`CoreValue`] for the differential — a bare-`Value`\"] # [doc = \" backend is wrapped as `CoreValue::Repr`). Boxed: a `CoreValue` is far larger than the small\"] # [doc = \" `String` reason variants, so boxing keeps the enum compact (clippy `large_enum_variant`).\"] Value (Box < CoreValue >) , # [doc = \" The backend was skipped for an *environmental* reason (a missing toolchain / a feature that is\"] # [doc = \" off). NOT a loss — the harness simply could not measure it here. Carries the reason.\"] Skipped (String) , # [doc = \" The backend *cannot* lower this program — an explicit unlowerable/unsupported node. This is a\"] # [doc = \" recorded **capability loss** with its reason (G2: never omitted).\"] Unlowerable (String) , # [doc = \" The backend errored at run time (overflow, depth limit, a compile/exec failure that is not a\"] # [doc = \" toolchain-absence skip). A recorded failure, surfaced honestly.\"] Error (String) , }",
+      "reason": "enum `Outcome` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 96,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "impl Outcome { # [doc = \" A value outcome (boxes the value to keep the enum compact).\"] # [must_use] pub fn value_outcome (v : CoreValue) -> Self { Outcome :: Value (Box :: new (v)) } # [doc = \" The produced value, if any.\"] # [must_use] pub fn value (& self) -> Option < & CoreValue > { match self { Outcome :: Value (v) => Some (v) , _ => None , } } # [doc = \" A short status word for the report.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Outcome :: Value (_) => \"value\" , Outcome :: Skipped (_) => \"skipped\" , Outcome :: Unlowerable (_) => \"unlowerable\" , Outcome :: Error (_) => \"error\" , } } # [doc = \" The reason string for a non-value outcome (empty for a value).\"] # [must_use] pub fn reason (& self) -> & str { match self { Outcome :: Value (_) => \"\" , Outcome :: Skipped (m) | Outcome :: Unlowerable (m) | Outcome :: Error (m) => m , } } }",
+      "reason": "impl method `value_outcome` body: qualified/associated-function call `Outcome :: Value` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "impl Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 96,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl Outcome { # [doc = \" A value outcome (boxes the value to keep the enum compact).\"] # [must_use] pub fn value_outcome (v : CoreValue) -> Self { Outcome :: Value (Box :: new (v)) } # [doc = \" The produced value, if any.\"] # [must_use] pub fn value (& self) -> Option < & CoreValue > { match self { Outcome :: Value (v) => Some (v) , _ => None , } } # [doc = \" A short status word for the report.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Outcome :: Value (_) => \"value\" , Outcome :: Skipped (_) => \"skipped\" , Outcome :: Unlowerable (_) => \"unlowerable\" , Outcome :: Error (_) => \"error\" , } } # [doc = \" The reason string for a non-value outcome (empty for a value).\"] # [must_use] pub fn reason (& self) -> & str { match self { Outcome :: Value (_) => \"\" , Outcome :: Skipped (m) | Outcome :: Unlowerable (m) | Outcome :: Error (m) => m , } } }",
+      "reason": "dropped non-doc attribute(s) on method `value`: # [must_use]",
+      "item_name": "impl Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 96,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl Outcome { # [doc = \" A value outcome (boxes the value to keep the enum compact).\"] # [must_use] pub fn value_outcome (v : CoreValue) -> Self { Outcome :: Value (Box :: new (v)) } # [doc = \" The produced value, if any.\"] # [must_use] pub fn value (& self) -> Option < & CoreValue > { match self { Outcome :: Value (v) => Some (v) , _ => None , } } # [doc = \" A short status word for the report.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Outcome :: Value (_) => \"value\" , Outcome :: Skipped (_) => \"skipped\" , Outcome :: Unlowerable (_) => \"unlowerable\" , Outcome :: Error (_) => \"error\" , } } # [doc = \" The reason string for a non-value outcome (empty for a value).\"] # [must_use] pub fn reason (& self) -> & str { match self { Outcome :: Value (_) => \"\" , Outcome :: Skipped (m) | Outcome :: Unlowerable (m) | Outcome :: Error (m) => m , } } }",
+      "reason": "dropped non-doc attribute(s) on method `status`: # [must_use]",
+      "item_name": "impl Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 96,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl Outcome { # [doc = \" A value outcome (boxes the value to keep the enum compact).\"] # [must_use] pub fn value_outcome (v : CoreValue) -> Self { Outcome :: Value (Box :: new (v)) } # [doc = \" The produced value, if any.\"] # [must_use] pub fn value (& self) -> Option < & CoreValue > { match self { Outcome :: Value (v) => Some (v) , _ => None , } } # [doc = \" A short status word for the report.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Outcome :: Value (_) => \"value\" , Outcome :: Skipped (_) => \"skipped\" , Outcome :: Unlowerable (_) => \"unlowerable\" , Outcome :: Error (_) => \"error\" , } } # [doc = \" The reason string for a non-value outcome (empty for a value).\"] # [must_use] pub fn reason (& self) -> & str { match self { Outcome :: Value (_) => \"\" , Outcome :: Skipped (m) | Outcome :: Unlowerable (m) | Outcome :: Error (m) => m , } } }",
+      "reason": "dropped non-doc attribute(s) on method `reason`: # [must_use]",
+      "item_name": "impl Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 133,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" **Observational equivalence** of two results — the honest differential equality. Compares the\"] # [doc = \" *observable* (`repr + payload + guarantee` for a repr value; content-identity + guarantee for a\"] # [doc = \" datum), **excluding** dynamic `Meta` provenance. This mirrors the M-210 `ObservationalEquiv`\"] # [doc = \" checker and the existing three-way differential test (`crates/mycelium-l1/tests/differential.rs`),\"] # [doc = \" which compare on the observable, not full structural `Value`/`Meta` equality.\"] # [doc = \"\"] # [doc = \" This matters for honesty: the compiled backends (JIT/direct-LLVM) read a raw value back from\"] # [doc = \" native execution and stamp `Provenance::Root` (they carry no derivation chain), while the\"] # [doc = \" interpreter records a `Derived` provenance. A full `==` would flag that as a \\\"correctness\"] # [doc = \" divergence\\\" even though the *result* (repr+payload+guarantee) is identical — a **false** loss.\"] # [doc = \" Provenance is dynamic metadata, explicitly excluded from content identity (RFC-0001 §4.6); a true\"] # [doc = \" correctness loss is a different repr/payload/datum or a weaker guarantee, which this does catch.\"] # [must_use] pub fn observable_eq (a : & CoreValue , b : & CoreValue) -> bool { match (a , b) { (CoreValue :: Repr (x) , CoreValue :: Repr (y)) => { x . repr () == y . repr () && x . payload () == y . payload () && x . meta () . guarantee () == y . meta () . guarantee () } (CoreValue :: Data (x) , CoreValue :: Data (y)) => { x . content_hash () == y . content_hash () && x . guarantee () == y . guarantee () } _ => false , } }",
+      "reason": "method call `.repr(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__repr` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `repr(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered)",
+      "item_name": "observable_eq"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 163,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" The shared trusted engines every backend dispatches through (prim registry + certified swap).\"] # [doc = \" Constructed once and reused, so a backend swap cannot smuggle in a second semantics.\"] pub struct Engines { # [doc = \" The trusted primitive-op registry.\"] pub prims : PrimRegistry , # [doc = \" The certified binary<->ternary swap engine.\"] pub swap : BinaryTernarySwapEngine , }",
+      "reason": "struct `Engines` uses named fields and references a type not resolvable in-file — emitting it positionally would introduce an unresolved reference that poisons the file's `myc check`; left gapped under the M-1006 resolvability gate (VR-5/G2)",
+      "item_name": "Engines"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 172,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl Default for Engines { fn default () -> Self { Self { prims : PrimRegistry :: with_builtins () , swap : BinaryTernarySwapEngine , } } }",
+      "reason": "no member of this impl block could be transpiled (1 sub-issue(s)): impl method `default` body: struct literal `Engines { .. }` — not an in-file single-ctor struct or enum struct-variant that emits (no constructor to build; a cross-nodule variant is an honest DN-113/DN-134-OQ-2 resolvability gap, never a fabricated out-of-file reference — VR-5/G2)",
+      "item_name": "Engines"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 181,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Map a direct-LLVM/JIT [`AotError`] onto a never-silent [`Outcome`]: a toolchain absence is a\"] # [doc = \" graceful `Skipped`; an unsupported node/repr/prim is a `Unlowerable` capability loss; everything\"] # [doc = \" else (overflow, depth limit, compile/exec failure) is a recorded `Error`.\"] fn classify_aot_error (e : & AotError) -> Outcome { match e { AotError :: ToolchainMissing (tool) => { Outcome :: Skipped (format ! (\"native toolchain absent ({tool})\")) } AotError :: UnsupportedRepr (_) | AotError :: UnsupportedPrim (_) | AotError :: UnsupportedNode (_) | AotError :: UnsupportedScheme (_) => Outcome :: Unlowerable (e . to_string ()) , _ => Outcome :: Error (e . to_string ()) , } }",
+      "reason": "qualified/associated-function call `Outcome :: Skipped` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "classify_aot_error"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 199,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Run the **reference interpreter** (trusted base) on `node`. Spans the whole fragment (repr + data\"] # [doc = \" + recursion), returning a [`CoreValue`]. The differential baseline.\"] # [must_use] pub fn run_interp (node : & Node , eng : & Engines) -> Outcome { let interp = Interpreter :: new (PrimRegistry :: with_builtins () , Box :: new (BinaryTernarySwapEngine) ,) ; let _ = eng ; match interp . eval_core (node) { Ok (v) => Outcome :: value_outcome (v) , Err (e) => Outcome :: Error (e . to_string ()) , } }",
+      "reason": "qualified/associated-function call `Interpreter :: new` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "run_interp"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 216,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Run the **AOT env-machine** (`mycelium_mlir::run_core`) on `node` — a big-step ANF evaluator,\"] # [doc = \" in-process, spanning the whole fragment.\"] # [must_use] pub fn run_aot_env (node : & Node , eng : & Engines) -> Outcome { match mycelium_mlir :: run_core (node , & eng . prims , & eng . swap) { Ok (v) => Outcome :: value_outcome (v) , Err (e) => Outcome :: Error (e . to_string ()) , } }",
+      "reason": "qualified/associated-function call `mycelium_mlir :: run_core` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "run_aot_env"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 226,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Run the **JIT** backend (`mycelium_mlir::jit_run`) on `node`. Bit/trit-neg subset only; an\"] # [doc = \" out-of-subset node is a capability loss, a missing `clang` is a graceful skip. Returns a bare\"] # [doc = \" `Value` lifted to `CoreValue::Repr`.\"] # [must_use] pub fn run_jit (node : & Node) -> Outcome { match mycelium_mlir :: jit_run (node) { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (e) => classify_aot_error (& e) , } }",
+      "reason": "qualified/associated-function call `mycelium_mlir :: jit_run` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "run_jit"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 237,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Run the **direct-LLVM** backend (`mycelium_mlir::compile_and_run`) on `node`. Bit + trit\"] # [doc = \" arithmetic + bounded non-recursive data subset; an out-of-subset node is a capability loss, a\"] # [doc = \" missing `llc`/`clang` is a graceful skip. Returns a bare `Value` lifted to `CoreValue::Repr`.\"] # [must_use] pub fn run_direct_llvm (node : & Node) -> Outcome { match mycelium_mlir :: compile_and_run (node) { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (e) => classify_aot_error (& e) , } }",
+      "reason": "qualified/associated-function call `mycelium_mlir :: compile_and_run` did not resolve to a known-emitted associated fn — Mycelium calls are bare identifiers, and the only sound surface form for `Type::method(...)` is the mangled `Type__method` name the declaration side already emits for a receiver-less inherent-impl associated fn (DN-34 §8.13/8.14), referenced only when that exact declaration is PROVEN present (same-file, or a resolved M-1084 cross-nodule sibling). A primitive/std associated fn with no emitted decl (e.g. `i128::try_from`), an unresolved type, or a `self`-receiving method (excluded by construction — it stays reachable only from its own bare call site) all gap here rather than fabricate a call (G2/VR-5, DN-133)",
+      "item_name": "run_direct_llvm"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 248,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" Run the **MLIR-dialect** backend on `node`. Only compiled in when the `mlir-dialect` feature is\"] # [doc = \" on; otherwise this records a `Skipped` (\\\"feature off\\\"). When on, it probes for the libMLIR\"] # [doc = \" toolchain at runtime and records a `Skipped` if it is absent, a capability loss on an\"] # [doc = \" out-of-element-wise-fragment node, and an error on a compile/run failure. Bare `Value` lifted.\"] # [must_use] pub fn run_mlir_dialect (node : & Node) -> Outcome { # [cfg (feature = \"mlir-dialect\")] { use mycelium_mlir :: DialectError ; if ! mycelium_mlir :: MlirTools :: is_available () { return Outcome :: Skipped (\"MLIR toolchain absent (mlir-opt/mlir-translate/clang not resolved)\" . into () ,) ; } match mycelium_mlir :: mlir_compile_and_run (node) { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (DialectError :: ToolchainMissing (t)) => { Outcome :: Skipped (format ! (\"MLIR toolchain absent ({t})\")) } Err (DialectError :: Unsupported (m)) => Outcome :: Unlowerable (m) , Err (e) => Outcome :: Error (e . to_string ()) , } } # [cfg (not (feature = \"mlir-dialect\"))] { let _ = node ; Outcome :: Skipped (\"the `mlir-dialect` feature is off (build with --features mlir-dialect)\" . into () ,) } }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "run_mlir_dialect"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 281,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" Dispatch: run one backend on one node once, returning its [`Outcome`]. (Timing is layered on top\"] # [doc = \" in `measure`; this is the single-shot call the timing loop repeats.)\"] # [must_use] pub fn run_once (backend : Backend , node : & Node , eng : & Engines) -> Outcome { match backend { Backend :: Interp => run_interp (node , eng) , Backend :: AotEnv => run_aot_env (node , eng) , Backend :: Jit => run_jit (node) , Backend :: DirectLlvm => run_direct_llvm (node) , Backend :: MlirDialect => run_mlir_dialect (node) , } }",
+      "reason": "dropped non-doc attribute(s) on fn `run_once`: # [must_use]",
+      "item_name": "run_once"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 294,
+      "col": 1,
+      "category": "Struct",
+      "rust_construct": "Struct",
+      "snippet": "# [doc = \" A **warm runner**: a backend prepared so its *per-run* cost can be timed honestly, separating any\"] # [doc = \" one-time setup (a compile) from the repeated execution. For the compiled backends this compiles\"] # [doc = \" the artifact **once** (recording the one-time compile nanoseconds), then the closure times only\"] # [doc = \" `.run()`/`.call()` — so the timed figure is per-invocation, not per-compile (otherwise a \\\"loss\\\"\"] # [doc = \" would be wrongly attributed to compile cost). For the in-process backends the closure just re-runs\"] # [doc = \" the evaluator.\"] # [doc = \"\"] # [doc = \" The `probe` is the outcome of the first warm run (value / skip / unlowerable / error) — used for\"] # [doc = \" the differential + verdict category; `run` repeats the warm execution for timing (cloned via the\"] # [doc = \" boxed closure). `compile_ns` is the one-time setup cost when one applied.\"] pub struct WarmRun { # [doc = \" The probe outcome (the first warm execution's result).\"] pub probe : Outcome , # [doc = \" The repeatable warm-execution closure (times only the run, not any compile). `None` when the\"] # [doc = \" probe was not a value (nothing to time).\"] pub run : Option < Box < dyn Fn () -> Outcome > > , # [doc = \" The one-time setup (compile) cost in nanoseconds, when a compile happened (compiled backends).\"] pub compile_ns : Option < f64 > , }",
+      "reason": "struct `WarmRun` has a field type with no confirmed mapping (unsupported Rust type form `dyn Fn () -> Outcome`)",
+      "item_name": "WarmRun"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 314,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl WarmRun { fn in_process (probe : Outcome , run : Box < dyn Fn () -> Outcome >) -> Self { let run = matches ! (probe , Outcome :: Value (_)) . then_some (run) ; Self { probe , run , compile_ns : None , } } fn not_timed (probe : Outcome , compile_ns : Option < f64 >) -> Self { Self { probe , run : None , compile_ns , } } }",
+      "reason": "no member of this impl block could be transpiled (2 sub-issue(s)): impl method `in_process` signature: unsupported Rust type form `dyn Fn () -> Outcome`; impl method `not_timed` body: struct literal `WarmRun { .. }` — not an in-file single-ctor struct or enum struct-variant that emits (no constructor to build; a cross-nodule variant is an honest DN-113/DN-134-OQ-2 resolvability gap, never a fabricated out-of-file reference — VR-5/G2)",
+      "item_name": "WarmRun"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 333,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" Build a [`WarmRun`] for one backend on one node — the compile-once/run-many split that makes the\"] # [doc = \" per-run timing honest.\"] # [must_use] pub fn warm_runner (backend : Backend , node : & Node , eng : & Engines) -> WarmRun { match backend { Backend :: Interp => { let probe = run_interp (node , eng) ; let n = node . clone () ; let interp = Interpreter :: new (PrimRegistry :: with_builtins () , Box :: new (BinaryTernarySwapEngine) ,) ; WarmRun :: in_process (probe , Box :: new (move | | match interp . eval_core (& n) { Ok (v) => Outcome :: value_outcome (v) , Err (e) => Outcome :: Error (e . to_string ()) , }) ,) } Backend :: AotEnv => { let probe = run_aot_env (node , eng) ; let n = node . clone () ; let owned = Engines :: default () ; WarmRun :: in_process (probe , Box :: new (move | | run_aot_env (& n , & owned))) } Backend :: Jit => warm_jit (node) , Backend :: DirectLlvm => warm_direct_llvm (node) , Backend :: MlirDialect => warm_mlir_dialect (node) , } }",
+      "reason": "Rust ownership/identity-conversion no-op method `.clone()` has no Mycelium free-function/prim referent (value semantics — ADR-003); desugaring it to a bare `clone(recv)` would fabricate an unknown prim (`unknown function/constructor/prim `clone`` — verified against the oracle), so it is gapped, never fake-emitted (G2/VR-5)",
+      "item_name": "warm_runner"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 375,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" JIT: `compile_so` once (timed), then time `artifact.call()` (in-process `dlopen`ed `.so`).\"] fn warm_jit (node : & Node) -> WarmRun { use std :: rc :: Rc ; use std :: time :: Instant ; let t = Instant :: now () ; match mycelium_mlir :: compile_so (node) { Ok (artifact) => { # [allow (clippy :: cast_precision_loss)] let compile_ns = t . elapsed () . as_nanos () as f64 ; let probe = match artifact . call () { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (e) => classify_aot_error (& e) , } ; let art = Rc :: new (artifact) ; let run : Box < dyn Fn () -> Outcome > = { let art = Rc :: clone (& art) ; Box :: new (move | | match art . call () { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (e) => classify_aot_error (& e) , }) } ; let mut w = WarmRun :: in_process (probe , run) ; w . compile_ns = Some (compile_ns) ; w } Err (e) => WarmRun :: not_timed (classify_aot_error (& e) , None) , } }",
+      "reason": "function body contains a nested item declaration (e.g. a local `static`/`const`/`fn`) — this grammar fragment has no local-item production; only simple `let x = e;` bindings plus a trailing expression map",
+      "item_name": "warm_jit"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 406,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" Direct-LLVM: `compile` once (timed), then time `artifact.run()` (native artifact exec per call —\"] # [doc = \" process-spawn-bound, captioned as such in the report).\"] fn warm_direct_llvm (node : & Node) -> WarmRun { use std :: rc :: Rc ; use std :: time :: Instant ; let t = Instant :: now () ; match mycelium_mlir :: compile (node) { Ok (artifact) => { # [allow (clippy :: cast_precision_loss)] let compile_ns = t . elapsed () . as_nanos () as f64 ; let probe = match artifact . run () { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (e) => classify_aot_error (& e) , } ; let art = Rc :: new (artifact) ; let run : Box < dyn Fn () -> Outcome > = { let art = Rc :: clone (& art) ; Box :: new (move | | match art . run () { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (e) => classify_aot_error (& e) , }) } ; let mut w = WarmRun :: in_process (probe , run) ; w . compile_ns = Some (compile_ns) ; w } Err (e) => WarmRun :: not_timed (classify_aot_error (& e) , None) , } }",
+      "reason": "function body contains a nested item declaration (e.g. a local `static`/`const`/`fn`) — this grammar fragment has no local-item production; only simple `let x = e;` bindings plus a trailing expression map",
+      "item_name": "warm_direct_llvm"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 436,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" MLIR-dialect: `mlir_compile` once (timed), then time `artifact.run()`. Feature-gated; skips when\"] # [doc = \" the feature is off or the toolchain is absent.\"] fn warm_mlir_dialect (node : & Node) -> WarmRun { # [cfg (feature = \"mlir-dialect\")] { use mycelium_mlir :: DialectError ; use std :: rc :: Rc ; use std :: time :: Instant ; if ! mycelium_mlir :: MlirTools :: is_available () { return WarmRun :: not_timed (Outcome :: Skipped (\"MLIR toolchain absent (mlir-opt/mlir-translate/clang not resolved)\" . into () ,) , None ,) ; } let t = Instant :: now () ; match mycelium_mlir :: mlir_compile (node) { Ok (artifact) => { # [allow (clippy :: cast_precision_loss)] let compile_ns = t . elapsed () . as_nanos () as f64 ; let probe = match artifact . run () { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (DialectError :: ToolchainMissing (tt)) => { Outcome :: Skipped (format ! (\"MLIR toolchain absent ({tt})\")) } Err (DialectError :: Unsupported (m)) => Outcome :: Unlowerable (m) , Err (e) => Outcome :: Error (e . to_string ()) , } ; let art = Rc :: new (artifact) ; let run : Box < dyn Fn () -> Outcome > = { let art = Rc :: clone (& art) ; Box :: new (move | | match art . run () { Ok (v) => Outcome :: value_outcome (CoreValue :: Repr (v)) , Err (DialectError :: ToolchainMissing (tt)) => { Outcome :: Skipped (format ! (\"MLIR toolchain absent ({tt})\")) } Err (DialectError :: Unsupported (m)) => Outcome :: Unlowerable (m) , Err (e) => Outcome :: Error (e . to_string ()) , }) } ; let mut w = WarmRun :: in_process (probe , run) ; w . compile_ns = Some (compile_ns) ; w } Err (DialectError :: ToolchainMissing (tt)) => WarmRun :: not_timed (Outcome :: Skipped (format ! (\"MLIR toolchain absent ({tt})\")) , None ,) , Err (DialectError :: Unsupported (m)) => WarmRun :: not_timed (Outcome :: Unlowerable (m) , None) , Err (e) => WarmRun :: not_timed (Outcome :: Error (e . to_string ()) , None) , } } # [cfg (not (feature = \"mlir-dialect\"))] { let _ = node ; WarmRun :: not_timed (Outcome :: Skipped (\"the `mlir-dialect` feature is off (build with --features mlir-dialect)\" . into () ,) , None ,) } }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "warm_mlir_dialect"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/backend.rs",
+      "line": 501,
+      "col": 1,
+      "category": "TestItem",
+      "rust_construct": "TestItem",
+      "snippet": "# [cfg (test)] mod tests { use super :: * ; use crate :: corpus :: corpus ; # [test] fn interp_and_aot_agree_on_every_corpus_case () { let eng = Engines :: default () ; for case in corpus () { let node = case . elaborate () . expect (\"elaborates\") ; let i = run_interp (& node , & eng) ; let a = run_aot_env (& node , & eng) ; let (iv , av) = (i . value () . expect (\"interp produces a value\") , a . value () . expect (\"aot produces a value\") ,) ; assert ! (observable_eq (iv , av) , \"interp vs AOT diverged (observable: repr+payload+guarantee) on `{}`\" , case . id) ; } } # [test] fn recursion_and_swap_are_capability_losses_and_data_is_never_silent () { use crate :: corpus :: Fragment ; for case in corpus () { let node = case . elaborate () . expect (\"elaborates\") ; match case . fragment { Fragment :: Recursion => { for (label , outcome) in [(\"jit\" , run_jit (& node)) , (\"direct-llvm\" , run_direct_llvm (& node)) ,] { assert ! (matches ! (outcome , Outcome :: Unlowerable (_) | Outcome :: Skipped (_)) , \"{label} must record a capability loss / skip on `{}` ({}), got {:?}\" , case . id , case . fragment . label () , outcome . status ()) ; } } Fragment :: Data | Fragment :: Swap => { for (label , outcome) in [(\"jit\" , run_jit (& node)) , (\"direct-llvm\" , run_direct_llvm (& node)) ,] { assert ! (matches ! (outcome , Outcome :: Value (_) | Outcome :: Unlowerable (_) | Outcome :: Skipped (_)) , \"{label} on {} `{}` must be never-silent (value / capability loss / \\\n                             skip), got {:?}\" , case . fragment . label () , case . id , outcome . status ()) ; } } Fragment :: BitSubset => { } } } } }",
+      "reason": "#[cfg(test)] item — out of scope for this PoC's transpilation surface (excluded from the expressible-fraction denominator, but recorded, never silently skipped)",
+      "item_name": "tests"
+    }
+  ],
+  "total_top_level_items": 25
+}

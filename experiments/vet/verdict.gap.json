@@ -1,0 +1,467 @@
+{
+  "source": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+  "emitted_items": [
+    "co-include:Backend,Outcome",
+    "co-include:Timing",
+    "Speed",
+    "Verdict",
+    "impl Verdict",
+    "BaselineEntry",
+    "RegressionBaseline",
+    "RegressionOutcome",
+    "impl RegressionOutcome"
+  ],
+  "gaps": [
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 30,
+      "col": 1,
+      "category": "Import",
+      "rust_construct": "Import",
+      "snippet": "use crate :: backend :: { observable_eq , Backend , Outcome } ;",
+      "reason": "`use backend::observable_eq` — `observable_eq` is not among sibling `backend`'s successfully-emitted surface in this batch (the sibling file itself gapped it rather than emitting it). Flagged, not guessed (VR-5/G2)",
+      "item_name": "co-include:Backend,Outcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 33,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The speed comparison band of a backend vs the interpreter, once both produced an *equal* value.\"] # [doc = \" `Empirical`, with the threshold reified (no black box). A ratio is `interp_ns / backend_ns`:\"] # [doc = \" `> 1` means the backend is faster than the interpreter (a win); `< 1` means slower (a loss).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Speed { # [doc = \" Faster than the interpreter beyond the neutral band — a measured WIN.\"] Win , # [doc = \" Within the neutral band of the interpreter — neither a clear win nor loss.\"] Neutral , # [doc = \" Slower than the interpreter beyond the neutral band — a measured LOSS.\"] Loss , }",
+      "reason": "dropped non-doc non-derive attribute(s) on enum `Speed`: # [serde (rename_all = \"kebab-case\")]",
+      "item_name": "Speed"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 33,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The speed comparison band of a backend vs the interpreter, once both produced an *equal* value.\"] # [doc = \" `Empirical`, with the threshold reified (no black box). A ratio is `interp_ns / backend_ns`:\"] # [doc = \" `> 1` means the backend is faster than the interpreter (a win); `< 1` means slower (a loss).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Speed { # [doc = \" Faster than the interpreter beyond the neutral band — a measured WIN.\"] Win , # [doc = \" Within the neutral band of the interpreter — neither a clear win nor loss.\"] Neutral , # [doc = \" Slower than the interpreter beyond the neutral band — a measured LOSS.\"] Loss , }",
+      "reason": "enum `Speed` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Speed"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 33,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The speed comparison band of a backend vs the interpreter, once both produced an *equal* value.\"] # [doc = \" `Empirical`, with the threshold reified (no black box). A ratio is `interp_ns / backend_ns`:\"] # [doc = \" `> 1` means the backend is faster than the interpreter (a win); `< 1` means slower (a loss).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Speed { # [doc = \" Faster than the interpreter beyond the neutral band — a measured WIN.\"] Win , # [doc = \" Within the neutral band of the interpreter — neither a clear win nor loss.\"] Neutral , # [doc = \" Slower than the interpreter beyond the neutral band — a measured LOSS.\"] Loss , }",
+      "reason": "enum `Speed` derive(Copy) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Speed"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 33,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The speed comparison band of a backend vs the interpreter, once both produced an *equal* value.\"] # [doc = \" `Empirical`, with the threshold reified (no black box). A ratio is `interp_ns / backend_ns`:\"] # [doc = \" `> 1` means the backend is faster than the interpreter (a win); `< 1` means slower (a loss).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Speed { # [doc = \" Faster than the interpreter beyond the neutral band — a measured WIN.\"] Win , # [doc = \" Within the neutral band of the interpreter — neither a clear win nor loss.\"] Neutral , # [doc = \" Slower than the interpreter beyond the neutral band — a measured LOSS.\"] Loss , }",
+      "reason": "enum `Speed` derive(Eq): covered by co-occurring PartialEq → `fn eq_Speed` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "Speed"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 33,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The speed comparison band of a backend vs the interpreter, once both produced an *equal* value.\"] # [doc = \" `Empirical`, with the threshold reified (no black box). A ratio is `interp_ns / backend_ns`:\"] # [doc = \" `> 1` means the backend is faster than the interpreter (a win); `< 1` means slower (a loss).\"] # [derive (Debug , Clone , Copy , PartialEq , Eq , serde :: Serialize)] # [serde (rename_all = \"kebab-case\")] pub enum Speed { # [doc = \" Faster than the interpreter beyond the neutral band — a measured WIN.\"] Win , # [doc = \" Within the neutral band of the interpreter — neither a clear win nor loss.\"] Neutral , # [doc = \" Slower than the interpreter beyond the neutral band — a measured LOSS.\"] Loss , }",
+      "reason": "enum `Speed` derive(...) names serde :: Serialize not in the DN-128 enum-derive set this leaf builds (Debug/PartialEq/Clone/Copy recognized; bare Eq is a satisfied co-occurrence note; Hash/PartialOrd/Ord/Default stay product-only for now) — dropped, no confirmed Mycelium surface",
+      "item_name": "Speed"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "dropped non-doc non-derive attribute(s) on enum `Verdict`: # [serde (tag = \"kind\" , rename_all = \"kebab-case\")]",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `SpeedWin` named field(s) `ratio_x1000` emitted positionally as `SpeedWin(Binary{64})` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `SpeedNeutral` named field(s) `ratio_x1000` emitted positionally as `SpeedNeutral(Binary{64})` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `SpeedLoss` named field(s) `ratio_x1000, reason` emitted positionally as `SpeedLoss(Binary{64}, Bytes)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `CorrectnessLoss` named field(s) `detail` emitted positionally as `CorrectnessLoss(Bytes)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `CapabilityLoss` named field(s) `reason` emitted positionally as `CapabilityLoss(Bytes)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `RuntimeError` named field(s) `message` emitted positionally as `RuntimeError(Bytes)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `Skipped` named field(s) `reason` emitted positionally as `Skipped(Bytes)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` variant `BaselineFailed` named field(s) `message` emitted positionally as `BaselineFailed(Bytes)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` derive(Eq): covered by co-occurring PartialEq → `fn eq_Verdict` (product-row collision policy; DN-128 / ONESHOT C2) — not a second emission",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 47,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The full classification of one (backend, case) pair vs the trusted interpreter baseline.\"] # [derive (Debug , Clone , PartialEq , Eq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum Verdict { # [doc = \" Both produced equal values; the backend was faster than the interpreter.\"] SpeedWin { # [doc = \" `interp_ns / backend_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; within the neutral band.\"] SpeedNeutral { # [doc = \" `interp_ns / backend_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Both produced equal values; the backend was slower than the interpreter (a speed LOSS).\"] SpeedLoss { # [doc = \" `interp_ns / backend_ns` (`< 1`).\"] ratio_x1000 : u64 , # [doc = \" A derivable reason, where one applies (e.g. process-spawn-bound) — honest, not buried.\"] reason : String , } , # [doc = \" The backend produced a value that **diverges** from the interpreter's — a correctness LOSS.\"] CorrectnessLoss { # [doc = \" A short description of the divergence.\"] detail : String , } , # [doc = \" The backend cannot lower this program — a capability LOSS, with the reason.\"] CapabilityLoss { # [doc = \" The backend's own explanation (the unlowerable-node reason).\"] reason : String , } , # [doc = \" The backend errored at run time (overflow, depth limit, compile/exec failure).\"] RuntimeError { # [doc = \" The error message.\"] message : String , } , # [doc = \" The backend was skipped (toolchain absent / feature off) — not measured, not a verdict.\"] Skipped { # [doc = \" Why it was skipped.\"] reason : String , } , # [doc = \" The interpreter baseline itself failed on this case — no comparison is possible (the harness\"] # [doc = \" records it loudly; the trusted base should not fail, so this is a corpus/engine red flag).\"] BaselineFailed { # [doc = \" What the interpreter reported.\"] message : String , } , }",
+      "reason": "enum `Verdict` derive(...) names serde :: Serialize not in the DN-128 enum-derive set this leaf builds (Debug/PartialEq/Clone/Copy recognized; bare Eq is a satisfied co-occurrence note; Hash/PartialOrd/Ord/Default stay product-only for now) — dropped, no confirmed Mycelium surface",
+      "item_name": "Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 96,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl Verdict { # [doc = \" A short status word for the report table.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } => \"WIN\" , Verdict :: SpeedNeutral { .. } => \"neutral\" , Verdict :: SpeedLoss { .. } => \"LOSS (speed)\" , Verdict :: CorrectnessLoss { .. } => \"LOSS (correctness)\" , Verdict :: CapabilityLoss { .. } => \"LOSS (capability)\" , Verdict :: RuntimeError { .. } => \"error\" , Verdict :: Skipped { .. } => \"skipped\" , Verdict :: BaselineFailed { .. } => \"baseline-failed\" , } } # [doc = \" Whether this verdict counts as a LOSS (any of the three loss kinds) — for the \\\"where we're\"] # [doc = \" losing\\\" rollup. A skip / error / baseline-failure is not counted as a loss (it is its own\"] # [doc = \" category), and neutral/win are not losses.\"] # [must_use] pub fn is_loss (& self) -> bool { matches ! (self , Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } | Verdict :: CapabilityLoss { .. }) } # [doc = \" Whether this verdict counts as a WIN (a measured speed win).\"] # [must_use] pub fn is_win (& self) -> bool { matches ! (self , Verdict :: SpeedWin { .. }) } # [doc = \" The honest guarantee tag for this verdict. A measured speed band is `Empirical`; a capability\"] # [doc = \" loss / runtime error / skip is `Declared` (an observed fact about the run, not a trial mean).\"] # [must_use] pub fn guarantee_tag (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } | Verdict :: SpeedNeutral { .. } | Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } => \"Empirical\" , Verdict :: CapabilityLoss { .. } | Verdict :: RuntimeError { .. } | Verdict :: Skipped { .. } | Verdict :: BaselineFailed { .. } => \"Declared\" , } } }",
+      "reason": "dropped non-doc attribute(s) on method `status`: # [must_use]",
+      "item_name": "impl Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 96,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "impl Verdict { # [doc = \" A short status word for the report table.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } => \"WIN\" , Verdict :: SpeedNeutral { .. } => \"neutral\" , Verdict :: SpeedLoss { .. } => \"LOSS (speed)\" , Verdict :: CorrectnessLoss { .. } => \"LOSS (correctness)\" , Verdict :: CapabilityLoss { .. } => \"LOSS (capability)\" , Verdict :: RuntimeError { .. } => \"error\" , Verdict :: Skipped { .. } => \"skipped\" , Verdict :: BaselineFailed { .. } => \"baseline-failed\" , } } # [doc = \" Whether this verdict counts as a LOSS (any of the three loss kinds) — for the \\\"where we're\"] # [doc = \" losing\\\" rollup. A skip / error / baseline-failure is not counted as a loss (it is its own\"] # [doc = \" category), and neutral/win are not losses.\"] # [must_use] pub fn is_loss (& self) -> bool { matches ! (self , Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } | Verdict :: CapabilityLoss { .. }) } # [doc = \" Whether this verdict counts as a WIN (a measured speed win).\"] # [must_use] pub fn is_win (& self) -> bool { matches ! (self , Verdict :: SpeedWin { .. }) } # [doc = \" The honest guarantee tag for this verdict. A measured speed band is `Empirical`; a capability\"] # [doc = \" loss / runtime error / skip is `Declared` (an observed fact about the run, not a trial mean).\"] # [must_use] pub fn guarantee_tag (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } | Verdict :: SpeedNeutral { .. } | Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } => \"Empirical\" , Verdict :: CapabilityLoss { .. } | Verdict :: RuntimeError { .. } | Verdict :: Skipped { .. } | Verdict :: BaselineFailed { .. } => \"Declared\" , } } }",
+      "reason": "impl method `is_loss` body: expression-position macro `matches` — no macro system in this grammar fragment (`write!`/`format!` lower to pure `Bytes` per DN-127/M-1090 WU-3)",
+      "item_name": "impl Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 96,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "impl Verdict { # [doc = \" A short status word for the report table.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } => \"WIN\" , Verdict :: SpeedNeutral { .. } => \"neutral\" , Verdict :: SpeedLoss { .. } => \"LOSS (speed)\" , Verdict :: CorrectnessLoss { .. } => \"LOSS (correctness)\" , Verdict :: CapabilityLoss { .. } => \"LOSS (capability)\" , Verdict :: RuntimeError { .. } => \"error\" , Verdict :: Skipped { .. } => \"skipped\" , Verdict :: BaselineFailed { .. } => \"baseline-failed\" , } } # [doc = \" Whether this verdict counts as a LOSS (any of the three loss kinds) — for the \\\"where we're\"] # [doc = \" losing\\\" rollup. A skip / error / baseline-failure is not counted as a loss (it is its own\"] # [doc = \" category), and neutral/win are not losses.\"] # [must_use] pub fn is_loss (& self) -> bool { matches ! (self , Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } | Verdict :: CapabilityLoss { .. }) } # [doc = \" Whether this verdict counts as a WIN (a measured speed win).\"] # [must_use] pub fn is_win (& self) -> bool { matches ! (self , Verdict :: SpeedWin { .. }) } # [doc = \" The honest guarantee tag for this verdict. A measured speed band is `Empirical`; a capability\"] # [doc = \" loss / runtime error / skip is `Declared` (an observed fact about the run, not a trial mean).\"] # [must_use] pub fn guarantee_tag (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } | Verdict :: SpeedNeutral { .. } | Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } => \"Empirical\" , Verdict :: CapabilityLoss { .. } | Verdict :: RuntimeError { .. } | Verdict :: Skipped { .. } | Verdict :: BaselineFailed { .. } => \"Declared\" , } } }",
+      "reason": "impl method `is_win` body: expression-position macro `matches` — no macro system in this grammar fragment (`write!`/`format!` lower to pure `Bytes` per DN-127/M-1090 WU-3)",
+      "item_name": "impl Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 96,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl Verdict { # [doc = \" A short status word for the report table.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } => \"WIN\" , Verdict :: SpeedNeutral { .. } => \"neutral\" , Verdict :: SpeedLoss { .. } => \"LOSS (speed)\" , Verdict :: CorrectnessLoss { .. } => \"LOSS (correctness)\" , Verdict :: CapabilityLoss { .. } => \"LOSS (capability)\" , Verdict :: RuntimeError { .. } => \"error\" , Verdict :: Skipped { .. } => \"skipped\" , Verdict :: BaselineFailed { .. } => \"baseline-failed\" , } } # [doc = \" Whether this verdict counts as a LOSS (any of the three loss kinds) — for the \\\"where we're\"] # [doc = \" losing\\\" rollup. A skip / error / baseline-failure is not counted as a loss (it is its own\"] # [doc = \" category), and neutral/win are not losses.\"] # [must_use] pub fn is_loss (& self) -> bool { matches ! (self , Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } | Verdict :: CapabilityLoss { .. }) } # [doc = \" Whether this verdict counts as a WIN (a measured speed win).\"] # [must_use] pub fn is_win (& self) -> bool { matches ! (self , Verdict :: SpeedWin { .. }) } # [doc = \" The honest guarantee tag for this verdict. A measured speed band is `Empirical`; a capability\"] # [doc = \" loss / runtime error / skip is `Declared` (an observed fact about the run, not a trial mean).\"] # [must_use] pub fn guarantee_tag (& self) -> & 'static str { match self { Verdict :: SpeedWin { .. } | Verdict :: SpeedNeutral { .. } | Verdict :: SpeedLoss { .. } | Verdict :: CorrectnessLoss { .. } => \"Empirical\" , Verdict :: CapabilityLoss { .. } | Verdict :: RuntimeError { .. } | Verdict :: Skipped { .. } | Verdict :: BaselineFailed { .. } => \"Declared\" , } } }",
+      "reason": "dropped non-doc attribute(s) on method `guarantee_tag`: # [must_use]",
+      "item_name": "impl Verdict"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 148,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" The neutral band half-width: a backend within `[1/(1+NEUTRAL), 1+NEUTRAL]` of the interpreter's\"] # [doc = \" time is `Neutral` (neither a clear win nor loss). 0.10 ⇒ within ±10%. Reified here (no black box);\"] # [doc = \" a different study can pick a different band and say so.\"] pub const NEUTRAL_BAND : f64 = 0.10 ;",
+      "reason": "top-level `const NEUTRAL_BAND` — co-emit (ORACLE-R1 A4) only covers plain unsigned integer types (`u8`/`u16`/`u32`/`u64`/`u128`/`usize`); other types have no const item production and no faithful zero-arg-fn encoding (gap, never fabricate)",
+      "item_name": "NEUTRAL_BAND"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 153,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" Encode a ratio as fixed-point parts-per-thousand (so the verdict is exactly serializable and\"] # [doc = \" comparable without float noise in the report). `2.5x` ⇒ `2500`.\"] # [must_use] fn ratio_x1000 (interp_ns : f64 , backend_ns : f64) -> u64 { if backend_ns <= 0.0 { return 0 ; } let r = interp_ns / backend_ns ; # [allow (clippy :: cast_possible_truncation , clippy :: cast_sign_loss)] { (r * 1000.0) . round () . max (0.0) as u64 } }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "ratio_x1000"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 167,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" Classify one (backend, case) pair. `interp` is the trusted-baseline outcome+timing; `other` is the\"] # [doc = \" backend under test. The baseline must be the interpreter (asserted in debug).\"] # [doc = \"\"] # [doc = \" `backend` is the identity of `other` (used only to derive an honest speed-loss *reason*, e.g.\"] # [doc = \" process-spawn-bound — never to change the verdict itself).\"] # [must_use] pub fn classify (backend : Backend , interp : (& Outcome , Option < Timing >) , other : (& Outcome , Option < Timing >) ,) -> Verdict { debug_assert ! (! backend . is_baseline () , \"classify compares a NON-baseline backend\") ; let (interp_outcome , interp_timing) = interp ; let (other_outcome , other_timing) = other ; let interp_val = match interp_outcome { Outcome :: Value (v) => v , Outcome :: Skipped (m) | Outcome :: Unlowerable (m) | Outcome :: Error (m) => { return Verdict :: BaselineFailed { message : format ! (\"interpreter did not produce a value: {m}\") , } ; } } ; let other_val = match other_outcome { Outcome :: Value (v) => v , Outcome :: Skipped (reason) => { return Verdict :: Skipped { reason : reason . clone () , } } Outcome :: Unlowerable (reason) => { return Verdict :: CapabilityLoss { reason : reason . clone () , } } Outcome :: Error (message) => { return Verdict :: RuntimeError { message : message . clone () , } } } ; if ! observable_eq (interp_val , other_val) { return Verdict :: CorrectnessLoss { detail : format ! (\"backend result diverges from the interpreter on the observable \\\n                 (interp={interp_val:?}, backend={other_val:?})\") , } ; } let (Some (it) , Some (ot)) = (interp_timing , other_timing) else { return Verdict :: SpeedNeutral { ratio_x1000 : 1000 } ; } ; let r = it . ns_per_call / ot . ns_per_call ; let x1000 = ratio_x1000 (it . ns_per_call , ot . ns_per_call) ; if r > 1.0 + NEUTRAL_BAND { Verdict :: SpeedWin { ratio_x1000 : x1000 } } else if r < 1.0 / (1.0 + NEUTRAL_BAND) { let reason = if backend . is_process_spawn_bound () { \"process-spawn-bound: the per-invocation time is dominated by spawning a fresh native \\\n             process, not kernel compute (M-602/E1) — expected for a trivial kernel vs the \\\n             in-process interpreter\" . to_string () } else { \"slower than the in-process interpreter on this case (measured; no target — VR-5)\" . to_string () } ; Verdict :: SpeedLoss { ratio_x1000 : x1000 , reason , } } else { Verdict :: SpeedNeutral { ratio_x1000 : x1000 } } }",
+      "reason": "function body contains a macro-invocation statement (e.g. `debug_assert!`/`println!`) — no macro system in this grammar fragment",
+      "item_name": "classify"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 261,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" One committed baseline timing: a (case, backend) `ns_per_call` snapshot from a prior run, plus the\"] # [doc = \" host tag it was captured on (regression gates never compare across hosts — see\"] # [doc = \" [`RegressionOutcome::HostMismatch`]).\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct BaselineEntry { # [doc = \" The case id (matches [`crate::corpus::Case::id`]).\"] pub case_id : String , # [doc = \" The backend, by its stable label (matches [`Backend::label`] — kept as a string so the\"] # [doc = \" baseline JSON is self-describing without re-deriving the `Backend` serde mapping).\"] pub backend : String , # [doc = \" The committed `ns_per_call` this entry was captured at.\"] pub ns_per_call : f64 , }",
+      "reason": "struct `BaselineEntry` named field(s) `case_id, backend, ns_per_call` emitted positionally as `BaselineEntry(Bytes, Bytes, Float)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped (matches `lib/std/*.myc` hand-ports)",
+      "item_name": "BaselineEntry"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 261,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" One committed baseline timing: a (case, backend) `ns_per_call` snapshot from a prior run, plus the\"] # [doc = \" host tag it was captured on (regression gates never compare across hosts — see\"] # [doc = \" [`RegressionOutcome::HostMismatch`]).\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct BaselineEntry { # [doc = \" The case id (matches [`crate::corpus::Case::id`]).\"] pub case_id : String , # [doc = \" The backend, by its stable label (matches [`Backend::label`] — kept as a string so the\"] # [doc = \" baseline JSON is self-describing without re-deriving the `Backend` serde mapping).\"] pub backend : String , # [doc = \" The committed `ns_per_call` this entry was captured at.\"] pub ns_per_call : f64 , }",
+      "reason": "struct `BaselineEntry` derive(Debug): field 2 has type `Float`, a primitive repr (or `Seq`/tuple/other bracketed shape) with no ambient `Show` instance in this file (`lib/std/fmt.myc`'s primitive impls live in a separate, unimported nodule) — the whole derive is left an honest gap rather than a partial/fabricated render (G2)",
+      "item_name": "BaselineEntry"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 261,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" One committed baseline timing: a (case, backend) `ns_per_call` snapshot from a prior run, plus the\"] # [doc = \" host tag it was captured on (regression gates never compare across hosts — see\"] # [doc = \" [`RegressionOutcome::HostMismatch`]).\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct BaselineEntry { # [doc = \" The case id (matches [`crate::corpus::Case::id`]).\"] pub case_id : String , # [doc = \" The backend, by its stable label (matches [`Backend::label`] — kept as a string so the\"] # [doc = \" baseline JSON is self-describing without re-deriving the `Backend` serde mapping).\"] pub backend : String , # [doc = \" The committed `ns_per_call` this entry was captured at.\"] pub ns_per_call : f64 , }",
+      "reason": "struct `BaselineEntry` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "BaselineEntry"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 261,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" One committed baseline timing: a (case, backend) `ns_per_call` snapshot from a prior run, plus the\"] # [doc = \" host tag it was captured on (regression gates never compare across hosts — see\"] # [doc = \" [`RegressionOutcome::HostMismatch`]).\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct BaselineEntry { # [doc = \" The case id (matches [`crate::corpus::Case::id`]).\"] pub case_id : String , # [doc = \" The backend, by its stable label (matches [`Backend::label`] — kept as a string so the\"] # [doc = \" baseline JSON is self-describing without re-deriving the `Backend` serde mapping).\"] pub backend : String , # [doc = \" The committed `ns_per_call` this entry was captured at.\"] pub ns_per_call : f64 , }",
+      "reason": "struct `BaselineEntry` derive(PartialEq): field 2 has type `Float` — a derived TOTAL equality over a float field is refused (ADR-040 §2.4 NaN semantics: NaN != NaN under IEEE-754, so a structural `and`-fold cannot honestly claim total equality here — matching Rust's own `derive(Eq)` refusal for `f64`) — the whole derive is left an honest gap rather than a silently-wrong equality (G2)",
+      "item_name": "BaselineEntry"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 261,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" One committed baseline timing: a (case, backend) `ns_per_call` snapshot from a prior run, plus the\"] # [doc = \" host tag it was captured on (regression gates never compare across hosts — see\"] # [doc = \" [`RegressionOutcome::HostMismatch`]).\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct BaselineEntry { # [doc = \" The case id (matches [`crate::corpus::Case::id`]).\"] pub case_id : String , # [doc = \" The backend, by its stable label (matches [`Backend::label`] — kept as a string so the\"] # [doc = \" baseline JSON is self-describing without re-deriving the `Backend` serde mapping).\"] pub backend : String , # [doc = \" The committed `ns_per_call` this entry was captured at.\"] pub ns_per_call : f64 , }",
+      "reason": "struct `BaselineEntry` derive(...) names serde :: Serialize, serde :: Deserialize not in the DN-128 standard-derive set this leaf builds (Debug/Default/Clone/Copy/PartialEq/PartialOrd/Hash all recognized; bare Eq/Ord are deliberately NOT recognized — see emit/derives/mod.rs::TABLE's doc for why) — dropped, no confirmed Mycelium surface",
+      "item_name": "BaselineEntry"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 275,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" A committed regression baseline: a host tag (provenance — see [`crate::host_note_for_scaling`]'s\"] # [doc = \" sibling convention) plus every `(case, backend)` timing captured on that host at commit time.\"] # [doc = \" This is the artifact `regression_classify` compares a fresh run against — **not** a target to hit\"] # [doc = \" (VR-5): a REGRESSION row means \\\"slower than this baseline was, on this host\\\", nothing more.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct RegressionBaseline { # [doc = \" The host tag this baseline was captured on (e.g. `\\\"x86_64-linux, 4 hw threads\\\"`) — the\"] # [doc = \" portability guard: a baseline is only ever compared against a run tagged with the same host.\"] pub host_tag : String , # [doc = \" When the baseline was captured (a free-form provenance note — a date/commit, not parsed).\"] pub captured : String , # [doc = \" The trial count each entry's `ns_per_call` represents (documents the baseline's own honesty —\"] # [doc = \" it was itself an `Empirical` measurement with this many iterations, matching\"] # [doc = \" [`crate::timing::Timing::iters`]'s convention).\"] pub trial_iters : u32 , # [doc = \" Every captured `(case, backend)` timing.\"] pub entries : Vec < BaselineEntry > , }",
+      "reason": "struct `RegressionBaseline` named field(s) `host_tag, captured, trial_iters, entries` emitted positionally as `RegressionBaseline(Bytes, Bytes, Binary{32}, Vec[BaselineEntry])` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped (matches `lib/std/*.myc` hand-ports)",
+      "item_name": "RegressionBaseline"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 275,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" A committed regression baseline: a host tag (provenance — see [`crate::host_note_for_scaling`]'s\"] # [doc = \" sibling convention) plus every `(case, backend)` timing captured on that host at commit time.\"] # [doc = \" This is the artifact `regression_classify` compares a fresh run against — **not** a target to hit\"] # [doc = \" (VR-5): a REGRESSION row means \\\"slower than this baseline was, on this host\\\", nothing more.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct RegressionBaseline { # [doc = \" The host tag this baseline was captured on (e.g. `\\\"x86_64-linux, 4 hw threads\\\"`) — the\"] # [doc = \" portability guard: a baseline is only ever compared against a run tagged with the same host.\"] pub host_tag : String , # [doc = \" When the baseline was captured (a free-form provenance note — a date/commit, not parsed).\"] pub captured : String , # [doc = \" The trial count each entry's `ns_per_call` represents (documents the baseline's own honesty —\"] # [doc = \" it was itself an `Empirical` measurement with this many iterations, matching\"] # [doc = \" [`crate::timing::Timing::iters`]'s convention).\"] pub trial_iters : u32 , # [doc = \" Every captured `(case, backend)` timing.\"] pub entries : Vec < BaselineEntry > , }",
+      "reason": "struct `RegressionBaseline` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "RegressionBaseline"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 275,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" A committed regression baseline: a host tag (provenance — see [`crate::host_note_for_scaling`]'s\"] # [doc = \" sibling convention) plus every `(case, backend)` timing captured on that host at commit time.\"] # [doc = \" This is the artifact `regression_classify` compares a fresh run against — **not** a target to hit\"] # [doc = \" (VR-5): a REGRESSION row means \\\"slower than this baseline was, on this host\\\", nothing more.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize , serde :: Deserialize)] pub struct RegressionBaseline { # [doc = \" The host tag this baseline was captured on (e.g. `\\\"x86_64-linux, 4 hw threads\\\"`) — the\"] # [doc = \" portability guard: a baseline is only ever compared against a run tagged with the same host.\"] pub host_tag : String , # [doc = \" When the baseline was captured (a free-form provenance note — a date/commit, not parsed).\"] pub captured : String , # [doc = \" The trial count each entry's `ns_per_call` represents (documents the baseline's own honesty —\"] # [doc = \" it was itself an `Empirical` measurement with this many iterations, matching\"] # [doc = \" [`crate::timing::Timing::iters`]'s convention).\"] pub trial_iters : u32 , # [doc = \" Every captured `(case, backend)` timing.\"] pub entries : Vec < BaselineEntry > , }",
+      "reason": "struct `RegressionBaseline` derive(...) names serde :: Serialize, serde :: Deserialize not in the DN-128 standard-derive set this leaf builds (Debug/Default/Clone/Copy/PartialEq/PartialOrd/Hash all recognized; bare Eq/Ord are deliberately NOT recognized — see emit/derives/mod.rs::TABLE's doc for why) — dropped, no confirmed Mycelium surface",
+      "item_name": "RegressionBaseline"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 294,
+      "col": 1,
+      "category": "Impl",
+      "rust_construct": "Impl",
+      "snippet": "impl RegressionBaseline { # [doc = \" Look up this baseline's `ns_per_call` for `(case_id, backend)`, if captured.\"] # [must_use] pub fn lookup (& self , case_id : & str , backend : Backend) -> Option < f64 > { self . entries . iter () . find (| e | e . case_id == case_id && e . backend == backend . label ()) . map (| e | e . ns_per_call) } # [doc = \" Parse a baseline from its committed JSON text. Never-silent: a malformed baseline is an\"] # [doc = \" explicit `Err`, never treated as \\\"no baseline\\\" (which would silently disable regression\"] # [doc = \" gating).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \" The `serde_json` parse error, verbatim.\"] pub fn from_json (text : & str) -> Result < Self , serde_json :: Error > { serde_json :: from_str (text) } # [doc = \" Serialize this baseline to pretty JSON (the committed-artifact format).\"] # [doc = \"\"] # [doc = \" # Errors\"] # [doc = \" A `serde_json` serialization error (only possible on an unrepresentable float, e.g. NaN/∞ —\"] # [doc = \" never expected from a real measurement, but never silently substituted either).\"] pub fn to_json (& self) -> Result < String , serde_json :: Error > { serde_json :: to_string_pretty (self) } }",
+      "reason": "no member of this impl block could be transpiled (3 sub-issue(s)): impl method `lookup` body: method call `.map(...)` has no proven-emitted free-fn referent in this file (neither a D4-mangled inherent `Type__map` nor a bare inherent recorded by this file's left-to-right pass, nor a prim_map / combinator row). Emitting bare `map(recv, …)` would fabricate an unknown prim and file-poison myc-check (G-β Rank A / G2/VR-5; residual when the method body itself gapped — e.g. M-1037 `.to_vec()` inside `read_to_end` — so the declaration was never registered); impl method `from_json` signature: qualified type path `serde_json :: Error` — collapsing to its last segment would risk colliding with an unrelated same-named local type (e.g. `std::cmp::Ordering` vs a local `Ordering`); left an explicit gap rather than guessed (VR-5); impl method `to_json` signature: qualified type path `serde_json :: Error` — collapsing to its last segment would risk colliding with an unrelated same-named local type (e.g. `std::cmp::Ordering` vs a local `Ordering`); left an explicit gap rather than guessed (VR-5)",
+      "item_name": "RegressionBaseline"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 324,
+      "col": 1,
+      "category": "Other",
+      "rust_construct": "Other",
+      "snippet": "# [doc = \" The regression-gate half-width: a fresh `ns_per_call` within `[1/(1+REGRESSION_BAND),\"] # [doc = \" 1+REGRESSION_BAND]` of the baseline is a `Hold`; slower beyond that is a `Regression`, faster\"] # [doc = \" beyond that is an `Improvement`. Reified (no black box) — a wider/narrower band is a different,\"] # [doc = \" nameable study. Set wider than [`NEUTRAL_BAND`] (±10%) because host-to-host-run noise on a shared\"] # [doc = \" CI-like box compounds two `Empirical` measurements (the baseline capture and this run), not one.\"] pub const REGRESSION_BAND : f64 = 0.20 ;",
+      "reason": "top-level `const REGRESSION_BAND` — co-emit (ORACLE-R1 A4) only covers plain unsigned integer types (`u8`/`u16`/`u32`/`u64`/`u128`/`usize`); other types have no const item production and no faithful zero-arg-fn encoding (gap, never fabricate)",
+      "item_name": "REGRESSION_BAND"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 331,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum RegressionOutcome { # [doc = \" Faster than the baseline beyond [`REGRESSION_BAND`] — a measured improvement.\"] Improvement { # [doc = \" `baseline_ns / this_run_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Within [`REGRESSION_BAND`] of the baseline — holding steady.\"] Hold { # [doc = \" `baseline_ns / this_run_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Slower than the baseline beyond [`REGRESSION_BAND`] — a measured regression, flagged.\"] Regression { # [doc = \" `baseline_ns / this_run_ns` (`< 1`).\"] ratio_x1000 : u64 , } , # [doc = \" This run has no timing to compare (skip / capability loss / error / untimed) — not gated.\"] NotTimed , # [doc = \" The baseline has no entry for this `(case, backend)` — nothing to compare against yet (e.g. a\"] # [doc = \" newly added corpus case); never fabricated as a `Hold`.\"] NoBaseline , # [doc = \" The baseline's host tag does not match this run's host tag — refused rather than silently\"] # [doc = \" compared (a different host's numbers are not portable, VR-5).\"] HostMismatch { # [doc = \" The baseline's recorded host tag.\"] baseline_host : String , # [doc = \" This run's host tag.\"] this_host : String , } , }",
+      "reason": "dropped non-doc non-derive attribute(s) on enum `RegressionOutcome`: # [serde (tag = \"kind\" , rename_all = \"kebab-case\")]",
+      "item_name": "RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 331,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum RegressionOutcome { # [doc = \" Faster than the baseline beyond [`REGRESSION_BAND`] — a measured improvement.\"] Improvement { # [doc = \" `baseline_ns / this_run_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Within [`REGRESSION_BAND`] of the baseline — holding steady.\"] Hold { # [doc = \" `baseline_ns / this_run_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Slower than the baseline beyond [`REGRESSION_BAND`] — a measured regression, flagged.\"] Regression { # [doc = \" `baseline_ns / this_run_ns` (`< 1`).\"] ratio_x1000 : u64 , } , # [doc = \" This run has no timing to compare (skip / capability loss / error / untimed) — not gated.\"] NotTimed , # [doc = \" The baseline has no entry for this `(case, backend)` — nothing to compare against yet (e.g. a\"] # [doc = \" newly added corpus case); never fabricated as a `Hold`.\"] NoBaseline , # [doc = \" The baseline's host tag does not match this run's host tag — refused rather than silently\"] # [doc = \" compared (a different host's numbers are not portable, VR-5).\"] HostMismatch { # [doc = \" The baseline's recorded host tag.\"] baseline_host : String , # [doc = \" This run's host tag.\"] this_host : String , } , }",
+      "reason": "enum `RegressionOutcome` variant `Improvement` named field(s) `ratio_x1000` emitted positionally as `Improvement(Binary{64})` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 331,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum RegressionOutcome { # [doc = \" Faster than the baseline beyond [`REGRESSION_BAND`] — a measured improvement.\"] Improvement { # [doc = \" `baseline_ns / this_run_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Within [`REGRESSION_BAND`] of the baseline — holding steady.\"] Hold { # [doc = \" `baseline_ns / this_run_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Slower than the baseline beyond [`REGRESSION_BAND`] — a measured regression, flagged.\"] Regression { # [doc = \" `baseline_ns / this_run_ns` (`< 1`).\"] ratio_x1000 : u64 , } , # [doc = \" This run has no timing to compare (skip / capability loss / error / untimed) — not gated.\"] NotTimed , # [doc = \" The baseline has no entry for this `(case, backend)` — nothing to compare against yet (e.g. a\"] # [doc = \" newly added corpus case); never fabricated as a `Hold`.\"] NoBaseline , # [doc = \" The baseline's host tag does not match this run's host tag — refused rather than silently\"] # [doc = \" compared (a different host's numbers are not portable, VR-5).\"] HostMismatch { # [doc = \" The baseline's recorded host tag.\"] baseline_host : String , # [doc = \" This run's host tag.\"] this_host : String , } , }",
+      "reason": "enum `RegressionOutcome` variant `Hold` named field(s) `ratio_x1000` emitted positionally as `Hold(Binary{64})` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 331,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum RegressionOutcome { # [doc = \" Faster than the baseline beyond [`REGRESSION_BAND`] — a measured improvement.\"] Improvement { # [doc = \" `baseline_ns / this_run_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Within [`REGRESSION_BAND`] of the baseline — holding steady.\"] Hold { # [doc = \" `baseline_ns / this_run_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Slower than the baseline beyond [`REGRESSION_BAND`] — a measured regression, flagged.\"] Regression { # [doc = \" `baseline_ns / this_run_ns` (`< 1`).\"] ratio_x1000 : u64 , } , # [doc = \" This run has no timing to compare (skip / capability loss / error / untimed) — not gated.\"] NotTimed , # [doc = \" The baseline has no entry for this `(case, backend)` — nothing to compare against yet (e.g. a\"] # [doc = \" newly added corpus case); never fabricated as a `Hold`.\"] NoBaseline , # [doc = \" The baseline's host tag does not match this run's host tag — refused rather than silently\"] # [doc = \" compared (a different host's numbers are not portable, VR-5).\"] HostMismatch { # [doc = \" The baseline's recorded host tag.\"] baseline_host : String , # [doc = \" This run's host tag.\"] this_host : String , } , }",
+      "reason": "enum `RegressionOutcome` variant `Regression` named field(s) `ratio_x1000` emitted positionally as `Regression(Binary{64})` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 331,
+      "col": 1,
+      "category": "NamedFieldDrop",
+      "rust_construct": "NamedFieldDrop",
+      "snippet": "# [doc = \" The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum RegressionOutcome { # [doc = \" Faster than the baseline beyond [`REGRESSION_BAND`] — a measured improvement.\"] Improvement { # [doc = \" `baseline_ns / this_run_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Within [`REGRESSION_BAND`] of the baseline — holding steady.\"] Hold { # [doc = \" `baseline_ns / this_run_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Slower than the baseline beyond [`REGRESSION_BAND`] — a measured regression, flagged.\"] Regression { # [doc = \" `baseline_ns / this_run_ns` (`< 1`).\"] ratio_x1000 : u64 , } , # [doc = \" This run has no timing to compare (skip / capability loss / error / untimed) — not gated.\"] NotTimed , # [doc = \" The baseline has no entry for this `(case, backend)` — nothing to compare against yet (e.g. a\"] # [doc = \" newly added corpus case); never fabricated as a `Hold`.\"] NoBaseline , # [doc = \" The baseline's host tag does not match this run's host tag — refused rather than silently\"] # [doc = \" compared (a different host's numbers are not portable, VR-5).\"] HostMismatch { # [doc = \" The baseline's recorded host tag.\"] baseline_host : String , # [doc = \" This run's host tag.\"] this_host : String , } , }",
+      "reason": "enum `RegressionOutcome` variant `HostMismatch` named field(s) `baseline_host, this_host` emitted positionally as `HostMismatch(Bytes, Bytes)` — Mycelium's `constructor` is positional-only (no record surface); product structure preserved, field names dropped",
+      "item_name": "RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 331,
+      "col": 1,
+      "category": "DeriveSatisfied",
+      "rust_construct": "DeriveSatisfied",
+      "snippet": "# [doc = \" The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum RegressionOutcome { # [doc = \" Faster than the baseline beyond [`REGRESSION_BAND`] — a measured improvement.\"] Improvement { # [doc = \" `baseline_ns / this_run_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Within [`REGRESSION_BAND`] of the baseline — holding steady.\"] Hold { # [doc = \" `baseline_ns / this_run_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Slower than the baseline beyond [`REGRESSION_BAND`] — a measured regression, flagged.\"] Regression { # [doc = \" `baseline_ns / this_run_ns` (`< 1`).\"] ratio_x1000 : u64 , } , # [doc = \" This run has no timing to compare (skip / capability loss / error / untimed) — not gated.\"] NotTimed , # [doc = \" The baseline has no entry for this `(case, backend)` — nothing to compare against yet (e.g. a\"] # [doc = \" newly added corpus case); never fabricated as a `Hold`.\"] NoBaseline , # [doc = \" The baseline's host tag does not match this run's host tag — refused rather than silently\"] # [doc = \" compared (a different host's numbers are not portable, VR-5).\"] HostMismatch { # [doc = \" The baseline's recorded host tag.\"] baseline_host : String , # [doc = \" This run's host tag.\"] this_host : String , } , }",
+      "reason": "enum `RegressionOutcome` derive(Clone) is a satisfied no-op under Mycelium's value semantics (ADR-003 — every value already copies structurally; DN-128 §6.1) — not emitted as an impl, not a gap",
+      "item_name": "RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 331,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "# [doc = \" The regression-gate verdict for one `(case, backend)` pair — this run vs the committed baseline.\"] # [derive (Debug , Clone , PartialEq , serde :: Serialize)] # [serde (tag = \"kind\" , rename_all = \"kebab-case\")] pub enum RegressionOutcome { # [doc = \" Faster than the baseline beyond [`REGRESSION_BAND`] — a measured improvement.\"] Improvement { # [doc = \" `baseline_ns / this_run_ns` (`> 1`).\"] ratio_x1000 : u64 , } , # [doc = \" Within [`REGRESSION_BAND`] of the baseline — holding steady.\"] Hold { # [doc = \" `baseline_ns / this_run_ns`.\"] ratio_x1000 : u64 , } , # [doc = \" Slower than the baseline beyond [`REGRESSION_BAND`] — a measured regression, flagged.\"] Regression { # [doc = \" `baseline_ns / this_run_ns` (`< 1`).\"] ratio_x1000 : u64 , } , # [doc = \" This run has no timing to compare (skip / capability loss / error / untimed) — not gated.\"] NotTimed , # [doc = \" The baseline has no entry for this `(case, backend)` — nothing to compare against yet (e.g. a\"] # [doc = \" newly added corpus case); never fabricated as a `Hold`.\"] NoBaseline , # [doc = \" The baseline's host tag does not match this run's host tag — refused rather than silently\"] # [doc = \" compared (a different host's numbers are not portable, VR-5).\"] HostMismatch { # [doc = \" The baseline's recorded host tag.\"] baseline_host : String , # [doc = \" This run's host tag.\"] this_host : String , } , }",
+      "reason": "enum `RegressionOutcome` derive(...) names serde :: Serialize not in the DN-128 enum-derive set this leaf builds (Debug/PartialEq/Clone/Copy recognized; bare Eq is a satisfied co-occurrence note; Hash/PartialOrd/Ord/Default stay product-only for now) — dropped, no confirmed Mycelium surface",
+      "item_name": "RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 365,
+      "col": 1,
+      "category": "DeriveAttr",
+      "rust_construct": "DeriveAttr",
+      "snippet": "impl RegressionOutcome { # [doc = \" A short status word for the report table.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { RegressionOutcome :: Improvement { .. } => \"WIN (vs baseline)\" , RegressionOutcome :: Hold { .. } => \"hold\" , RegressionOutcome :: Regression { .. } => \"REGRESSION\" , RegressionOutcome :: NotTimed => \"not-timed\" , RegressionOutcome :: NoBaseline => \"no-baseline\" , RegressionOutcome :: HostMismatch { .. } => \"host-mismatch\" , } } # [doc = \" Whether this is a flagged regression (the row the \\\"regression gate\\\" name refers to).\"] # [must_use] pub fn is_regression (& self) -> bool { matches ! (self , RegressionOutcome :: Regression { .. }) } }",
+      "reason": "dropped non-doc attribute(s) on method `status`: # [must_use]",
+      "item_name": "impl RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 365,
+      "col": 1,
+      "category": "MacroInvocation",
+      "rust_construct": "MacroInvocation",
+      "snippet": "impl RegressionOutcome { # [doc = \" A short status word for the report table.\"] # [must_use] pub fn status (& self) -> & 'static str { match self { RegressionOutcome :: Improvement { .. } => \"WIN (vs baseline)\" , RegressionOutcome :: Hold { .. } => \"hold\" , RegressionOutcome :: Regression { .. } => \"REGRESSION\" , RegressionOutcome :: NotTimed => \"not-timed\" , RegressionOutcome :: NoBaseline => \"no-baseline\" , RegressionOutcome :: HostMismatch { .. } => \"host-mismatch\" , } } # [doc = \" Whether this is a flagged regression (the row the \\\"regression gate\\\" name refers to).\"] # [must_use] pub fn is_regression (& self) -> bool { matches ! (self , RegressionOutcome :: Regression { .. }) } }",
+      "reason": "impl method `is_regression` body: expression-position macro `matches` — no macro system in this grammar fragment (`write!`/`format!` lower to pure `Bytes` per DN-127/M-1090 WU-3)",
+      "item_name": "impl RegressionOutcome"
+    },
+    {
+      "file": "/root/git/isolated/mycelium/crates/mycelium-bench/src/verdict.rs",
+      "line": 386,
+      "col": 1,
+      "category": "MultiStmtBody",
+      "rust_construct": "MultiStmtBody",
+      "snippet": "# [doc = \" Classify one `(case, backend)` pair's fresh timing against the committed `baseline`, gated on the\"] # [doc = \" host tag matching. `this_host` is the running host's tag (the caller's provenance note, e.g.\"] # [doc = \" [`crate::host_note_for_scaling`]); `this_ns` is `None` when this run did not time the pair (a\"] # [doc = \" skip / capability loss / error) — recorded as [`RegressionOutcome::NotTimed`], never compared as\"] # [doc = \" if it were zero.\"] # [must_use] pub fn regression_classify (baseline : & RegressionBaseline , this_host : & str , case_id : & str , backend : Backend , this_ns : Option < f64 > ,) -> RegressionOutcome { if baseline . host_tag != this_host { return RegressionOutcome :: HostMismatch { baseline_host : baseline . host_tag . clone () , this_host : this_host . to_string () , } ; } let Some (this_ns) = this_ns else { return RegressionOutcome :: NotTimed ; } ; let Some (baseline_ns) = baseline . lookup (case_id , backend) else { return RegressionOutcome :: NoBaseline ; } ; if this_ns <= 0.0 || baseline_ns <= 0.0 { return RegressionOutcome :: NotTimed ; } let r = baseline_ns / this_ns ; let x1000 = ratio_x1000 (baseline_ns , this_ns) ; if r > 1.0 + REGRESSION_BAND { RegressionOutcome :: Improvement { ratio_x1000 : x1000 } } else if r < 1.0 / (1.0 + REGRESSION_BAND) { RegressionOutcome :: Regression { ratio_x1000 : x1000 } } else { RegressionOutcome :: Hold { ratio_x1000 : x1000 } } }",
+      "reason": "function body has a semicolon-terminated (value-discarding) statement expression before the tail — a `let`-chain body maps only simple `let x = e;` bindings plus a single trailing expression",
+      "item_name": "regression_classify"
+    }
+  ],
+  "total_top_level_items": 15
+}

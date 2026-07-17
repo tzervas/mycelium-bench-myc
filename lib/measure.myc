@@ -1,0 +1,34 @@
+// nodule: bench.measure
+// Drive every backend over every corpus case: capture each backend's [`Outcome`] and (when it
+// produced a value) its [`Timing`], then classify it against the trusted interpreter into a
+// [`Verdict`]. The output is a structured [`RunRecord`] the report module renders.
+//
+// **Honesty in the timing budget:** in-process backends (interp, AOT env-machine, JIT) are timed
+// with many iterations; the process-spawn-bound backends (direct-LLVM, MLIR-dialect) are timed with
+// far fewer — each call spawns a fresh native process — and the report captions that this figure is
+// spawn-dominated for a trivial kernel (M-602/E1). The compiled paths also compile-once per case
+// before timing (so the timed figure is per-run, not per-compile); a compile failure is recorded.
+//
+// No correctness is assumed: the differential is computed *every* run, so a divergence is caught.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.measure;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.backend) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Backend = Interp | AotEnv | Jit | DirectLlvm | MlirDialect;
+type Outcome = Value(Box[CoreValue]) | Skipped(Bytes) | Unlowerable(Bytes) | Error(Bytes);
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.corpus) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Fragment = BitSubset | Data | Recursion | Swap;
+type Case = Case(Bytes, Bytes, Fragment, Bytes);
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.timing) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Timing = Timing(Float, Binary{32}, Binary{32}, Float);
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.verdict) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type Verdict = SpeedWin(Binary{64}) | SpeedNeutral(Binary{64}) | SpeedLoss(Binary{64}, Bytes) | CorrectnessLoss(Bytes) | CapabilityLoss(Bytes) | RuntimeError(Bytes) | Skipped(Bytes) | BaselineFailed(Bytes);
+
+// Per-backend timing budgets (warmup == timed iters per batch). In-process paths get many iters;
+// spawn-bound native paths get few (each call is a process spawn). Reified here (no black box).
+fn iters_for(backend: Backend) => Binary{32} = match backend { Interp => 20000, AotEnv => 20000, Jit => 2000, DirectLlvm | MlirDialect => 40 };

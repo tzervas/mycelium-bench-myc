@@ -1,0 +1,61 @@
+// nodule: bench.corpus
+// The shared **program corpus** every backend is measured on: v0-calculus source strings, parsed +
+// type-checked + elaborated to a closed Core IR [`Node`] (the universal backend input). Drawn from
+// the same shapes the M-210 three-way differential exercises (`crates/mycelium-l1/tests/
+// differential.rs`), so the corpus is grounded in already-trusted programs.
+//
+// Cases are tagged with the **fragment** they live in, which is what lets the harness *surface*
+// capability losses honestly (G2):
+// - [`Fragment::BitSubset`] — straight-line bit/trit programs the compiled backends (JIT,
+//   direct-LLVM, MLIR-dialect) can lower. These are where a backend can WIN or LOSE on *speed*.
+// - [`Fragment::Recursion`] — programs with `Fix`/`FixGroup` the compiled backends **cannot** lower
+//   (an explicit `Unsupported` refusal). Running these is how the harness records the compiled
+//   paths' **capability loss** with its reason — never omitting it.
+// - [`Fragment::Data`] — `Construct`/`Match` programs. A *flat non-recursive* match/construct to a
+//   repr the compiled backends MAY still lower; a recursive-data result they cannot. Which is which
+//   is a *measured* harness output (VR-5), not a pre-asserted capability claim.
+// - [`Fragment::Swap`] — uses the certified binary<->ternary swap. Since M-852 (PR #823) the compiled
+//   paths natively lower a **legal-pair** swap to a repr value; an illegal pair or unsupported repr
+//   is still an explicit capability loss. Which is which is a *measured* harness output (VR-5), like
+//   [`Fragment::Data`] — not a pre-asserted "always a loss" fact.
+//
+// Every case carries its source so the report is reproducible and the verdict is auditable.
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.corpus;
+
+// Which evaluation-complete fragment a case lives in — the basis for whether a compiled backend can
+// be expected to run it at all (a capability boundary, reified — no black box).
+pub type Fragment = BitSubset | Data | Recursion | Swap;
+
+impl Show[Fragment] for Fragment {
+  fn render(x: Fragment) => Bytes =
+    match x { BitSubset => "BitSubset", Data => "Data", Recursion => "Recursion", Swap => "Swap" };
+};
+
+fn eq_Fragment(a: Fragment, b: Fragment) => Binary{1} =
+  match a { BitSubset => match b { BitSubset => 0b1, _ => 0b0 }, Data => match b { Data => 0b1, _ => 0b0 }, Recursion => match b { Recursion => 0b1, _ => 0b0 }, Swap => match b { Swap => 0b1, _ => 0b0 } };
+
+impl Fragment {
+  // A short human label for the report.
+  fn label(self: Fragment) => Bytes = match self { BitSubset => "bit-subset", Data => "data", Recursion => "recursion", Swap => "swap" };
+};
+
+// One corpus entry: a stable id, the v0-calculus source, its fragment, and a one-line note on what
+// it stresses. The elaborated [`Node`] is produced on demand by [`Case::elaborate`].
+pub type Case = Case(Bytes, Bytes, Fragment, Bytes);
+
+impl Show[Case] for Case {
+  fn render(x: Case) => Bytes =
+    match x { Case(p0, p1, p2, p3) => bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat(bytes_concat("Case(", render(p0)), ", "), render(p1)), ", "), render(p2)), ", "), render(p3)), ")") };
+};
+
+// An error from turning a corpus source into a Core IR term — kept explicit (never a silent skip)
+// so a corpus regression (a program that no longer parses/checks/elaborates) is loud.
+type CorpusError = Parse(Bytes) | Check(Bytes) | Elaborate(Bytes);
+
+impl Show[CorpusError] for CorpusError {
+  fn render(x: CorpusError) => Bytes =
+    match x { Parse(p0) => bytes_concat(bytes_concat("Parse(", render(p0)), ")"), Check(p0) => bytes_concat(bytes_concat("Check(", render(p0)), ")"), Elaborate(p0) => bytes_concat(bytes_concat("Elaborate(", render(p0)), ")") };
+};

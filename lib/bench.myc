@@ -1,0 +1,29 @@
+// nodule: bench.bin_kw.bench
+// `mycelium-bench` runnable harness — runs the execution-backend benchmark over the shared corpus,
+// ingests the LLM-harness report, and writes a deterministic markdown + JSON report into
+// `crates/mycelium-bench/reports/`.
+//
+// **Run with `--release`** (`cargo run --release -p mycelium-bench --bin bench`). A debug build is
+// refused — its timings are not representative (no optimisation, overflow checks on), so any WIN/LOSS
+// verdict from it would be dishonest (VR-5/G2).
+//
+// It prints a short human summary to stdout and writes the full report to `reports/`. Optional flags:
+// `--out <DIR>` to redirect the report directory; `--stdout` to also print the markdown;
+// `--scaling [N]` to also run the multicore scaling suite (M-859; `N` caps worker count, default
+// host parallelism — this is *slow*, opt-in, off by default); `--baseline <FILE>` to gate this run's
+// single-core timings against a committed [`RegressionBaseline`] JSON (M-859; opt-in, off by
+// default — no baseline is fabricated when the flag is absent).
+// @summary: best-effort transpilation via mycelium-transpile (M-873). Declared,
+// unvalidated — no Mycelium parser/typechecker confirms this output; see the
+// accompanying .gap.json for every construct this pass could not express.
+nodule bench.bin_kw.bench;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.llm) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type LlmIngestError = Io(Bytes) | Parse(Bytes);
+
+// EXPLAIN (G-α L2-B/DN-124): Declared co-include of batch-sibling free-fn surface (homes: bench.report) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Type deps on the fn line are co-included above when present in-batch. Body free-fn/method callees may still residual-poison oracle (FLAG, not silent). G2/VR-5.
+fn neutral_band() => Float = NEUTRAL_BAND;
+
+// EXPLAIN (L2-B/DN-124): Declared co-include of batch-sibling type surface (homes: bench.verdict) so single-file oracle is self-contained — not a language `use` identity, not a short-form path collapse (M-1084 full path retained as provenance). Transitive type deps in the same batch are co-included. G2/VR-5.
+type BaselineEntry = BaselineEntry(Bytes, Bytes, Float);
+type RegressionBaseline = RegressionBaseline(Bytes, Bytes, Binary{32}, Vec[BaselineEntry]);
